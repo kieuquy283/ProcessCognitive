@@ -1,0 +1,12 @@
+data/
+results/
+results_text/
+*.zip
+*.gz
+*.parquet
+*.pkl
+*.joblib
+.env
+.venv/
+__pycache__/
+.ipynb_checkpoints/
