@@ -49,3 +49,7 @@ E11 extends E9c with a **200-case uniformly sampled unique-pair panel**, 150 sim
 - [Antigravity Gemini task](E11_ANTIGRAVITY_B_TASK.md)
 
 **No genuine E11 labels, AI–AI kappa or human validation results have been collected yet.**
+
+## E12 results and E13 next experiment
+
+The 400 E11 model-label comparison is complete. E12 tested whether learning GPT-6 Astra *silver* labels generalizes to new titles and provides incremental independent-posttest prediction. See [E12 report](../reports/E12_silver_mapping_incremental_prediction_2026-10-24.md). There is **no demonstrated post-test lift**. The future [E13 protocol](../docs/E13_practice_process_temporal_protocol_v0.1.md) instead tests quality and temporal progression of practice attempts, with count-preserving controls. No E13 results are claimed.
