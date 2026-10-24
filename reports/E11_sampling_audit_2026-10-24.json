@@ -1,0 +1,27 @@
+{
+  "dataset": "handshake-ai-research/studentbench",
+  "revision": "304c8d63c726e72b60510bba3a44454fc0726721",
+  "status": "UNANNOTATED",
+  "tutors": 13,
+  "sessions_selected": 624,
+  "sessions_retrieved": 624,
+  "development_sessions": 489,
+  "sessions_excluded_from_annotation_sampling": 135,
+  "active_concept_titles": 1999,
+  "gre_quant_subskills": 27,
+  "unique_candidate_pairs_before_excluding_pilot": 53973,
+  "e9c_exact_pairs_excluded": 120,
+  "eligible_unique_pairs": 53853,
+  "sample_total": 400,
+  "sample_strata": {
+    "uniform_unique_pair": 200,
+    "high_similarity_enriched": 150,
+    "generic_strategy_stress": 50
+  },
+  "distinct_titles_in_sample": 354,
+  "distinct_subskills_in_sample": 27,
+  "enriched_cosine_min": 0.4895426630973816,
+  "enriched_cosine_max": 0.8413675427436829,
+  "class_labels_generated": 0,
+  "known_limitation": "Representative for unique pairs only; deliberately enriched panels not prevalence estimators; future human validation required."
+}
