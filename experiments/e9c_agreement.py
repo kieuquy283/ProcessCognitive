@@ -116,13 +116,13 @@ def main():
         writer = csv.DictWriter(f, fieldnames=cols)
         writer.writeheader()
         for k in keys:
-            if A[k]["label"] != B[k]["label"]:
+            if A[k]["label"].strip().upper() != B[k]["label"].strip().upper():
                 writer.writerow({
                     "pair_id": k,
                     "gre_subskill": A[k]["gre_subskill"],
                     "tutoring_concept_title": A[k]["tutoring_concept_title"],
-                    "annotator_A": A[k]["label"],
-                    "annotator_B": B[k]["label"],
+                    "annotator_A": A[k]["label"].strip().upper(),
+                    "annotator_B": B[k]["label"].strip().upper(),
                     "rationale_A": A[k].get("rationale", ""),
                     "rationale_B": B[k].get("rationale", ""),
                 })
