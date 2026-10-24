@@ -2,3 +2,5 @@ fastembed>=0.9,<1.0
 torch>=2.3
 # GPU is not required: experiments run on CPU.
 # In resource-limited environments, install a matching CPU-only PyTorch build.
+
+openai>=2.0,<4.0  # independent GPT annotation via Responses API
