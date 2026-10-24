@@ -148,8 +148,17 @@ def main():
     p.add_argument("--out-dir",type=Path,default=Path("annotation_work/e11"))
     p.add_argument("--cache-dir",default=".cache/fastembed")
     p.add_argument("--per-arm",type=int,default=48)
+    p.add_argument("--metadata-cache",type=Path,help="Store/reuse metadata after remote fetch; never commit this file")
     args=p.parse_args()
-    rows,metadata=remote_sessions(args.per_arm) if args.remote else local_sessions(args.data,args.per_arm)
+    if args.metadata_cache and args.metadata_cache.is_file():
+        cache=json.loads(args.metadata_cache.read_text(encoding="utf8"))
+        rows,metadata=cache["rows"],cache["metadata"]
+        print("USING CACHED METADATA",len(rows),flush=True)
+    else:
+        rows,metadata=remote_sessions(args.per_arm) if args.remote else local_sessions(args.data,args.per_arm)
+        if args.metadata_cache:
+            args.metadata_cache.parent.mkdir(parents=True,exist_ok=True)
+            args.metadata_cache.write_text(json.dumps({"rows":rows,"metadata":metadata}),encoding="utf8")
     if args.remote:
         raw=request(BASE+"question_bank_quant.csv")
         if not raw:raise RuntimeError("Question bank download failed")
@@ -206,11 +215,13 @@ def main():
             50,random_panel+enriched,SEED+2)
     if len(enriched)!=150 or len(stress)!=50:
         raise RuntimeError(f"Insufficient candidates: enriched={len(enriched)}, strategy={len(stress)}")
+    score_index={(r["gre_subskill"],r["tutoring_concept_title"]):r for r in score}
     selected=[]
     for stratum,records in [("uniform_unique_pair",random_panel),
                             ("high_similarity_enriched",enriched),
                             ("generic_strategy_stress",stress)]:
-        for r in records:
+        for raw_r in records:
+            r=score_index[(raw_r["gre_subskill"],raw_r["tutoring_concept_title"])]
             tag=r["gre_subskill"]+"\0"+r["tutoring_concept_title"]
             uid="E11-"+hashlib.sha256(tag.encode("utf8")).hexdigest()[:12].upper()
             selected.append({**r,"sample_stratum":stratum,"pair_id":uid})
