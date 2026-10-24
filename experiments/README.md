@@ -105,3 +105,11 @@ python experiments/e9d_analyze_expert_review.py \
 ```
 
 The analyzer has passed a smoke test using **fictional** labels but has NOT generated any actual human verification. A single expert reviewer supplies a reference, **not** human–human inter-rater agreement. Original model outputs are not modified or committed.
+
+## E11 — sampling + Astra-silver mapping validity stress test
+
+**Status:** E11 sampling and silver-classifier diagnostic completed, human and new AI labels pending. [Real 400-pair sample](../annotations/templates/e11_pairs_blinded_400.csv), [report](../reports/E11_validated_mapping_sampling_silver_transfer_2026-10-24.md), [step-by-step E11 runbook](../annotations/E11_RUNBOOK.md).
+
+The E11 pairing pool is drawn only from 489 development sessions of a pinned StudentBench revision. The **400 label cells remain blank**. The silver transfer diagnostic shows D F1=0.182 on grouped unseen GRE subskills (only five positive Astra labels); do not interpret 167 model-predicted D labels on the E11 sample as 167 true matches.
+
+Scripts: e11_prepare_mapping_sample.py, e11_silver_risk_audit.py, e11_validate_labels.py and e11_evaluate_agreement.py. Execute annotation in two separate Codex and Antigravity sessions with the frozen [codebook](../annotations/E11_COMMON_LABELING_CODEBOOK.md). Analyst-only strata sidecar and completed labels stay under ignored annotation_work/.
