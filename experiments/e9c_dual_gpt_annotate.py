@@ -129,8 +129,8 @@ def get_batch_labels(client, model, rubric, batch, attempts=4):
     for record in parsed:
         if record["label"] not in ALLOWED:
             raise ValueError("Invalid categorical label")
-        if len(record["rationale"].split()) > 30:
-            raise ValueError("Rationale exceeded 30 words; inspect before rerun")
+        if len(record["rationale"].split()) > 25:
+            raise ValueError("Rationale exceeded 25 words; inspect before rerun")
     usage = None
     if getattr(response, "usage", None) is not None:
         usage = {
