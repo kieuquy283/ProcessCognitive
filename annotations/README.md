@@ -31,3 +31,9 @@ Related resources:
 - [Reproducible sample generation](../experiments/e9c_sample_pairs.py)
 
 The pilot is stratified by lexical-semantic rank and generic strategy type. It cannot estimate population-level mapping error rates without accounting for selection probabilities. The labels measure relation of **concept titles** to **GRE subskills**, not student mastery.
+
+## Optional: two independent GPT model annotators
+
+For an **AI–AI comparison** (not a substitute for two independent human coders), use the [fixed shared E9c prompt](E9c_shared_gpt_prompt_v1.md) and [dual-GPT execution guide](E9c_dual_GPT_execution_guide.md).
+
+The runner uses `gpt-6-luna` and `gpt-5.6-terra`, identical 120 blind pairs, separately stateless calls, local model-specific output files, and explicit opt-in for billed API requests. See `experiments/e9c_dual_gpt_annotate.py`. **No real API annotations were run by the research assistant; only code and mock/dry-run validations.** Always use `e9c_agreement.py --source model` for AI–AI results so that model agreement is never presented as human reliability.
