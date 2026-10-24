@@ -14,3 +14,6 @@ __pycache__/
 # Pretrained embedding caches
 .cache/
 models/
+
+# Unblinded label sheets, analyst similarity data and private coder notes
+annotation_work/
