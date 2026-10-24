@@ -29,6 +29,11 @@ python experiments/semantic_baseline.py --data ./data --output ./results/semanti
 
 # E8: session-total neural baseline vs event bag vs GRU vs shuffled-order GRU
 python experiments/event_gru.py --data ./data --output ./results/event_gru.json
+
+# E9: concept-to-subskill alignment (requires lesson-plan JSONs)
+python experiments/skill_conditioned_e9.py --data ./data --output ./results/e9.json
+# E9b: low-dimensional curriculum coverage + alignment checks
+python experiments/skill_coverage_e9b.py --data ./data --output ./results/e9b.json
 ```
 
 E7 and E8 use the same stratified session-level fold partition and same sampled tutor arms **if loaded from the same local data snapshot**. They deliberately have **different targets** (item correctness versus overall post-test score), so their loss values cannot be compared directly.
@@ -47,3 +52,7 @@ The semantic encoder is frozen and downloaded by fastembed into `.cache/fastembe
 - **Smoke tests of both scripts passed on synthetic data** as of 2026-10-24. Synthetic test results must never be cited as empirical evidence.
 
 See [research report](../reports/semantic_gru_2026-10-24.md) for grounded numbers and limitations.
+
+## E9 results and validation
+
+E9/E9b inspect **automated concept–subskill correspondence**. The study uses 27 GRE subskill descriptions and AI-generated lesson-plan concept names, which are **not human-labeled equivalents**. A 604-session real-data pilot did not show reliable additional predictive benefit from aligned embeddings or coverage; see [the E9 research report](../reports/E9_skill_conditioned_2026-10-24.md). The next step is the [E9c independent double-annotation protocol](../docs/E9c_annotation_protocol_v0.1.md); it has **not** been executed. Both E9 and E9b scripts compiled and passed end-to-end synthetic smoke tests; they have not yet been rerun against a complete pinned official data snapshot.
