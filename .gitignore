@@ -10,3 +10,7 @@ results_text/
 .venv/
 __pycache__/
 .ipynb_checkpoints/
+
+# Pretrained embedding caches
+.cache/
+models/
