@@ -18,7 +18,8 @@ import numpy as np
 from fastembed import TextEmbedding
 
 SEED=20261024
-BASE="https://huggingface.co/datasets/handshake-ai-research/studentbench/resolve/main/"
+DATA_REVISION="304c8d63c726e72b60510bba3a44454fc0726721"
+BASE="https://huggingface.co/datasets/handshake-ai-research/studentbench/resolve/"+DATA_REVISION+"/"
 API="https://huggingface.co/api/datasets/handshake-ai-research/studentbench"
 GENERIC=re.compile(r"\b(?:QC|strategy|strategies|test[- ]taking|exam technique|edge cases|time management|guessing|approach|problem[- ]solving)\b",re.I)
 PII=re.compile(r"[\w.\-+]+@[\w.\-]+\.[a-z]{2,}|https?://|(?:phone|student.id|email|address)\s*[:=]|[\r\n]|(?:\+?\d[\d\- ]{8,}\d)",re.I)
@@ -44,11 +45,11 @@ def request(url):
     return None
 
 def remote_sessions(per_arm):
-    root=json.loads(request(API+"/tree/main/1_main_leaderboard_data/gre_quant"))
+    root=json.loads(request(API+"/tree/"+DATA_REVISION+"/1_main_leaderboard_data/gre_quant"))
     arms=sorted(x["path"] for x in root if x["path"].split("/")[-1].startswith("ai_arm_"))
     tasks=[]
     for arm in arms:
-        raw=request(API+"/tree/main/"+arm)
+        raw=request(API+"/tree/"+DATA_REVISION+"/"+arm)
         if not raw:continue
         cases=sorted(x["path"] for x in json.loads(raw) if x["type"]=="directory")
         random.Random("E9:"+arm).shuffle(cases)
@@ -77,7 +78,7 @@ def remote_sessions(per_arm):
             if x:rows.append(x)
             if j%175==0:print("REMOTE fetched",j,"complete",len(rows),flush=True)
     metadata=json.loads(request(API))
-    return rows,dict(huggingface_revision=metadata.get("sha"),selected=len(tasks),downloaded=len(rows),arms=len(arms))
+    return rows,dict(huggingface_revision_pinned=DATA_REVISION,main_revision_observed=metadata.get("sha"),selected=len(tasks),downloaded=len(rows),arms=len(arms))
 
 def local_sessions(root,per_arm):
     base=Path(root)/"1_main_leaderboard_data"/"gre_quant"
