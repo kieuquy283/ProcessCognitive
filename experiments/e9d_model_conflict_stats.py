@@ -111,7 +111,7 @@ def main():
             ).pvalue if a_s_b_n + a_n_b_s else None,
         },
         "collapsed_S_N_model_agreement": float(np.mean(mapped_a == mapped_b)),
-        "collapsed_S_N_kappa": float(cohens_kappa(mapped_a, mapped_b)),
+        "collapsed_S_N_kappa": (None if cohens_kappa(mapped_a, mapped_b) is None\n                                else float(cohens_kappa(mapped_a, mapped_b))),
         "note": "No human labels; no population accuracy/validity or predictive gain established.",
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
