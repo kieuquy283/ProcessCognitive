@@ -56,3 +56,21 @@ See [research report](../reports/semantic_gru_2026-10-24.md) for grounded number
 ## E9 results and validation
 
 E9/E9b inspect **automated concept–subskill correspondence**. The study uses 27 GRE subskill descriptions and AI-generated lesson-plan concept names, which are **not human-labeled equivalents**. A 604-session real-data pilot did not show reliable additional predictive benefit from aligned embeddings or coverage; see [the E9 research report](../reports/E9_skill_conditioned_2026-10-24.md). The next step is the [E9c independent double-annotation protocol](../docs/E9c_annotation_protocol_v0.1.md); it has **not** been executed. Both E9 and E9b scripts compiled and passed end-to-end synthetic smoke tests; they have not yet been rerun against a complete pinned official data snapshot.
+
+
+## E9c — human-validation pilot (sample generation complete; human ratings pending)
+
+A blinded 120-pair sample has been generated and published from real GRE Quant lesson-plan concept titles. See [annotations guide](../annotations/README.md) and [E9c sampling report](../reports/E9c_sampling_audit_2026-10-24.md).
+
+```bash
+# Rebuild blinded pair sample from official locally downloaded data
+python experiments/e9c_sample_pairs.py --data ./data --out-dir ./annotation_work
+
+# After independent completion of both rating sheets (D/S/N/U):
+python experiments/e9c_agreement.py \
+  --annotator-a ./annotation_work/e9c_annotator_A.csv \
+  --annotator-b ./annotation_work/e9c_annotator_B.csv \
+  --output ./annotation_work/e9c_agreement.json
+```
+
+**Important:** No human ratings have been completed. Technical smoke tests with fictitious labels only validate the reliability-analysis script and must not be interpreted as scientific results. Do not copy analyst-only cosine scores into blinded annotation sheets.
