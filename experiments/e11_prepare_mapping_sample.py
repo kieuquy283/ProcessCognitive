@@ -117,7 +117,8 @@ def split_by_group(rows):
 
 def write_csv(path,rows,fieldnames):
     with path.open("w",encoding="utf-8",newline="") as f:
-        w=csv.DictWriter(f,fieldnames=fieldnames);w.writeheader();w.writerows(rows)
+        w=csv.DictWriter(f,fieldnames=fieldnames);w.writeheader()
+        w.writerows([{k:r[k] for k in fieldnames} for r in rows])
 
 def choose_top(pool,n,picked,seed):
     rng=random.Random(seed)
