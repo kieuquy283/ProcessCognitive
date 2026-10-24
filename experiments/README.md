@@ -78,3 +78,30 @@ python experiments/e9c_agreement.py \
 ## Independent two-GPT labels (optional, billable)
 
 The research repo also includes [one identical prompt](../annotations/E9c_shared_gpt_prompt_v1.md) and a [dual-GPT runner](e9c_dual_gpt_annotate.py) for a separate **model–model agreement** experiment. No paid API requests are made by default. For safe dry-run and instructions to authorize live requests, see [the guide](../annotations/E9c_dual_GPT_execution_guide.md). Not a replacement for human construct-validity annotation.
+
+## E9d — Model disagreement sensitivity and blinded expert construct audit
+
+The 120-item Astra/Gemini model–model agreement has been analyzed beyond a single κ value, including 15,000 GRE-subskill-cluster bootstrap resamples and a sensitivity analysis collapsing S/N. See [E9d report](../reports/E9d_construct_validity_sensitivity_2026-10-24.md).
+
+Run on **your local private original two model-labeled CSVs**:
+
+```bash
+python experiments/e9d_model_conflict_stats.py \
+  --model-a annotation_work/codex_astra/e9c_annotator_A.csv \
+  --model-b annotation_work/antigravity_gemini/e9c_annotator_B.csv \
+  --out annotation_work/e9d_conflict_stats.json
+```
+
+The **41-pair blinded review** remains unfilled (21 disagreements + 20 controls). A formatted two-axis XLSX was supplied privately to the researcher: record (1) direct mathematical content relation, (2) presence of general strategy, and (3) the original four-class label D/S/N/U, under the **unchanged original E9c codebook**. [Protocol](../docs/E9d_two_axis_expert_review_protocol_v0.1.md).
+
+Only after obtaining genuine independent expert labels, export the `Audit_41` worksheet to CSV and run:
+
+```bash
+python experiments/e9d_analyze_expert_review.py \
+  --expert-csv annotation_work/e9d_review_filled.csv \
+  --model-a annotation_work/codex_astra/e9c_annotator_A.csv \
+  --model-b annotation_work/antigravity_gemini/e9c_annotator_B.csv \
+  --out annotation_work/e9d_expert_comparison.json
+```
+
+The analyzer has passed a smoke test using **fictional** labels but has NOT generated any actual human verification. A single expert reviewer supplies a reference, **not** human–human inter-rater agreement. Original model outputs are not modified or committed.
