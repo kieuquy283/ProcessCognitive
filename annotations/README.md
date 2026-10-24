@@ -37,3 +37,15 @@ The pilot is stratified by lexical-semantic rank and generic strategy type. It c
 For an **AI–AI comparison** (not a substitute for two independent human coders), use the [fixed shared E9c prompt](E9c_shared_gpt_prompt_v1.md) and [dual-GPT execution guide](E9c_dual_GPT_execution_guide.md).
 
 The runner uses `gpt-6-luna` and `gpt-5.6-terra`, identical 120 blind pairs, separately stateless calls, local model-specific output files, and explicit opt-in for billed API requests. See `experiments/e9c_dual_gpt_annotate.py`. **No real API annotations were run by the research assistant; only code and mock/dry-run validations.** Always use `e9c_agreement.py --source model` for AI–AI results so that model agreement is never presented as human reliability.
+
+## E11 — New 400-pair validation (unannotated)
+
+E11 extends E9c with a **200-case uniformly sampled unique-pair panel**, 150 similarity-enriched candidate direct matches and 50 generic-strategy stress cases. The 120 E9c pairs are excluded. The source dataset revision and audit are fixed in [E11 report](../reports/E11_validated_mapping_sampling_silver_transfer_2026-10-24.md).
+
+- [Start here: E11 runbook](E11_RUNBOOK.md)
+- [400 blinded, unlabelled pairs](templates/e11_pairs_blinded_400.csv)
+- [Common frozen codebook](E11_COMMON_LABELING_CODEBOOK.md)
+- [Codex Astra task](E11_CODEX_A_TASK.md)
+- [Antigravity Gemini task](E11_ANTIGRAVITY_B_TASK.md)
+
+**No genuine E11 labels, AI–AI kappa or human validation results have been collected yet.**
