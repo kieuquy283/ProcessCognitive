@@ -113,3 +113,11 @@ The analyzer has passed a smoke test using **fictional** labels but has NOT gene
 The E11 pairing pool is drawn only from 489 development sessions of a pinned StudentBench revision. The **400 label cells remain blank**. The silver transfer diagnostic shows D F1=0.182 on grouped unseen GRE subskills (only five positive Astra labels); do not interpret 167 model-predicted D labels on the E11 sample as 167 true matches.
 
 Scripts: e11_prepare_mapping_sample.py, e11_silver_risk_audit.py, e11_validate_labels.py and e11_evaluate_agreement.py. Execute annotation in two separate Codex and Antigravity sessions with the frozen [codebook](../annotations/E11_COMMON_LABELING_CODEBOOK.md). Analyst-only strata sidecar and completed labels stay under ignored annotation_work/.
+
+## E12 — Astra-silver mapping / post-test incremental-prediction study
+
+Exploratory E12a grouped OOF silver-label tests and E12b on 456 development sessions (12,312 post-test items) found **no reliable additional Log Loss benefit** from skill-aligned concept-title/message-volume features over the pretest/practice baseline, including versus within-session permuted concept alignment. See [E12 report](../reports/E12_silver_mapping_incremental_prediction_2026-10-24.md) and [exact aggregate E12b metrics](../reports/E12b_Astra_silver_posttest_2026-10-24.json). Full standalone E12a code and synthetic-tested E12b reimplementation were delivered as a private downloadable reproducibility ZIP in the ChatGPT research conversation; the exact E12b execution and local reimplementation have not been independently checked for byte-identical parity.
+
+**Important:** The 400 private GPT-6 Astra labels are SILVER by research assumption, NOT verified human truth. The remote run fully downloaded 582/624 targeted sessions; 126 reserved sessions were not scored. A positive model-label F1 does not imply added posttest predictive validity.
+
+The proposed next gate is [E13 practice-process and temporal evidence protocol](../docs/E13_practice_process_temporal_protocol_v0.1.md), **not yet executed**.
