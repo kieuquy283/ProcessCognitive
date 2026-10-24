@@ -1,0 +1,239 @@
+{
+  "data": "StudentBench GRE Quant original revision 304c8d63c726e72b60510bba3a44454fc0726721",
+  "n_retrieved": 582,
+  "n_targeted": 624,
+  "n_development_sessions": 456,
+  "n_reserved_unscored_sessions": 126,
+  "n_development_posttest_item_rows": 12312,
+  "evaluation": "4-fold grouped-by-session CV, development only",
+  "mapper": "Astra silver reference: original 120, E11 400, combined 520; four-class TF-IDF char + lexical LogisticRegression(C=.3), uncalibrated",
+  "results": {
+    "0.03:BASELINE": {
+      "logloss": 0.5264841179788454,
+      "brier": 0.17472052254772777,
+      "auc": 0.772246346975123
+    },
+    "0.03:CONCEPT_COUNT": {
+      "logloss": 0.5273522903601118,
+      "brier": 0.17511784495449292,
+      "auc": 0.7714620298466017
+    },
+    "0.03:LEXICAL": {
+      "logloss": 0.5277075008395706,
+      "brier": 0.1752352321812995,
+      "auc": 0.7710690483942011
+    },
+    "0.03:s120_ALIGNED": {
+      "logloss": 0.5279511682935241,
+      "brier": 0.17534411247888915,
+      "auc": 0.770714278874696
+    },
+    "0.03:s120_SHUFFLED": {
+      "logloss": 0.5280095111183315,
+      "brier": 0.17537180947478961,
+      "auc": 0.7707528498860524
+    },
+    "0.03:s400_ALIGNED": {
+      "logloss": 0.5278538710674728,
+      "brier": 0.17517820026877592,
+      "auc": 0.7710961887412147
+    },
+    "0.03:s400_SHUFFLED": {
+      "logloss": 0.5277156012974005,
+      "brier": 0.1751447936113473,
+      "auc": 0.7712059470574717
+    },
+    "0.03:s520_ALIGNED": {
+      "logloss": 0.5277587610975684,
+      "brier": 0.17520128037198898,
+      "auc": 0.7711162372886224
+    },
+    "0.03:s520_SHUFFLED": {
+      "logloss": 0.5278689566066249,
+      "brier": 0.17525778684513746,
+      "auc": 0.7710136904647913
+    },
+    "0.3:BASELINE": {
+      "logloss": 0.5257731951400817,
+      "brier": 0.1741494704547758,
+      "auc": 0.7730794090047303
+    },
+    "0.3:CONCEPT_COUNT": {
+      "logloss": 0.526999077885611,
+      "brier": 0.1746722191021791,
+      "auc": 0.7719664453147441
+    },
+    "0.3:LEXICAL": {
+      "logloss": 0.5274695231846211,
+      "brier": 0.17482786163191058,
+      "auc": 0.7715686462263247
+    },
+    "0.3:s120_ALIGNED": {
+      "logloss": 0.5277673436556938,
+      "brier": 0.17496842032787158,
+      "auc": 0.7711641144167609
+    },
+    "0.3:s120_SHUFFLED": {
+      "logloss": 0.5278960880798008,
+      "brier": 0.17501311066594383,
+      "auc": 0.7711437666373021
+    },
+    "0.3:s400_ALIGNED": {
+      "logloss": 0.5277985417322223,
+      "brier": 0.17486371654221555,
+      "auc": 0.771330637053067
+    },
+    "0.3:s400_SHUFFLED": {
+      "logloss": 0.5277396214289299,
+      "brier": 0.17485777784379647,
+      "auc": 0.7714085271559071
+    },
+    "0.3:s520_ALIGNED": {
+      "logloss": 0.5276234927868421,
+      "brier": 0.17485765562435251,
+      "auc": 0.771464214240573
+    },
+    "0.3:s520_SHUFFLED": {
+      "logloss": 0.5278207426658543,
+      "brier": 0.17493975953370663,
+      "auc": 0.7712876374073577
+    }
+  },
+  "contrasts": {
+    "0.03:BASELINE_to_CONCEPT_COUNT": {
+      "delta_session_mean": -0.0008681723812664513,
+      "ci95": [
+        -0.0020338966819000103,
+        0.0001788793251308149
+      ]
+    },
+    "0.03:BASELINE_to_LEXICAL": {
+      "delta_session_mean": -0.0012233828607253262,
+      "ci95": [
+        -0.0025879130479526573,
+        0.00006695903876884636
+      ]
+    },
+    "0.03:BASELINE_to_s120_ALIGNED": {
+      "delta_session_mean": -0.001467050314678699,
+      "ci95": [
+        -0.002843300491691346,
+        -0.0001761641557056465
+      ]
+    },
+    "0.03:BASELINE_to_s400_ALIGNED": {
+      "delta_session_mean": -0.0013697530886275088,
+      "ci95": [
+        -0.002932697226615918,
+        0.00015206817212294347
+      ]
+    },
+    "0.03:BASELINE_to_s520_ALIGNED": {
+      "delta_session_mean": -0.0012746431187230208,
+      "ci95": [
+        -0.0027279091723326158,
+        0.00009338133445913195
+      ]
+    },
+    "0.03:s400_SHUFFLED_to_s400_ALIGNED": {
+      "delta_session_mean": -0.00013826977007239404,
+      "ci95": [
+        -0.0007012237713077794,
+        0.00043419413444914523
+      ]
+    },
+    "0.03:s520_SHUFFLED_to_s520_ALIGNED": {
+      "delta_session_mean": 0.0001101955090565926,
+      "ci95": [
+        -0.0004975348963603466,
+        0.0007373176578894287
+      ]
+    },
+    "0.03:s120_ALIGNED_to_s400_ALIGNED": {
+      "delta_session_mean": 0.00009729722605119008,
+      "ci95": [
+        -0.0008167400493431197,
+        0.0009211532975462102
+      ]
+    },
+    "0.03:s400_ALIGNED_to_s520_ALIGNED": {
+      "delta_session_mean": 0.00009510996990448819,
+      "ci95": [
+        -0.00034953829992559325,
+        0.0005566525329640011
+      ]
+    },
+    "0.3:BASELINE_to_CONCEPT_COUNT": {
+      "delta_session_mean": -0.0012258827455292323,
+      "ci95": [
+        -0.0024994104658637244,
+        -0.00008430858115124095
+      ]
+    },
+    "0.3:BASELINE_to_LEXICAL": {
+      "delta_session_mean": -0.001696328044539506,
+      "ci95": [
+        -0.003087046340151343,
+        -0.00042900086845980523
+      ]
+    },
+    "0.3:BASELINE_to_s120_ALIGNED": {
+      "delta_session_mean": -0.0019941485156121054,
+      "ci95": [
+        -0.003406101418351573,
+        -0.0006392719393009722
+      ]
+    },
+    "0.3:BASELINE_to_s400_ALIGNED": {
+      "delta_session_mean": -0.0020253465921406697,
+      "ci95": [
+        -0.003799492762280495,
+        -0.0004246940766690896
+      ]
+    },
+    "0.3:BASELINE_to_s520_ALIGNED": {
+      "delta_session_mean": -0.001850297646760474,
+      "ci95": [
+        -0.003427912876158921,
+        -0.00040830910959996955
+      ]
+    },
+    "0.3:s400_SHUFFLED_to_s400_ALIGNED": {
+      "delta_session_mean": -0.0000589203032922938,
+      "ci95": [
+        -0.0006954445517819567,
+        0.0005929041494145667
+      ]
+    },
+    "0.3:s520_SHUFFLED_to_s520_ALIGNED": {
+      "delta_session_mean": 0.00019724987901225825,
+      "ci95": [
+        -0.0004894910133552629,
+        0.000906970486188734
+      ]
+    },
+    "0.3:s120_ALIGNED_to_s400_ALIGNED": {
+      "delta_session_mean": -0.00003119807652856439,
+      "ci95": [
+        -0.0010068874467831137,
+        0.0008788720199330757
+      ]
+    },
+    "0.3:s400_ALIGNED_to_s520_ALIGNED": {
+      "delta_session_mean": 0.00017504894538019575,
+      "ci95": [
+        -0.00032599759487706516,
+        0.0006805145632744612
+      ]
+    }
+  },
+  "warnings": [
+    "42/624 targeted sessions had incomplete remote fetch; not assumed missing at random.",
+    "None of model’s predicted P(D)/P(S) is calibrated or human verified.",
+    "Silver mapping includes title content from E11 development cohort, so title-level transductive exposure.",
+    "CIs are paired session bootstrap conditional on development CV predictions, do not adjust exploratory comparison multiplicity.",
+    "No final test; 126 reserved sessions have not been scored in E12b.",
+    "Same question IDs, tutor arms and sessions reused across exploratory E7-E11 studies, so no globally clean confirmatory claim.",
+    "A negative point estimate does not prove no skill/semantic features can ever be predictive."
+  ]
+}
