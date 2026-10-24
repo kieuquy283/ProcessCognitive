@@ -74,3 +74,7 @@ python experiments/e9c_agreement.py \
 ```
 
 **Important:** No human ratings have been completed. Technical smoke tests with fictitious labels only validate the reliability-analysis script and must not be interpreted as scientific results. Do not copy analyst-only cosine scores into blinded annotation sheets.
+
+## Independent two-GPT labels (optional, billable)
+
+The research repo also includes [one identical prompt](../annotations/E9c_shared_gpt_prompt_v1.md) and a [dual-GPT runner](e9c_dual_gpt_annotate.py) for a separate **model–model agreement** experiment. No paid API requests are made by default. For safe dry-run and instructions to authorize live requests, see [the guide](../annotations/E9c_dual_GPT_execution_guide.md). Not a replacement for human construct-validity annotation.
