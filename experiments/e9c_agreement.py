@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """E9c: inter-annotator reliability and disagreement audit.
 
-Use only after two independent people have annotated E9c pairs.
+Use after two independent human annotators OR two independent GPT models finish E9c.
+Do not describe GPT-GPT agreement as human inter-rater reliability.
 No raw titles, learner data, transcript or individual labels are written to Git.
 """
 import argparse
@@ -62,7 +63,13 @@ def main():
     parser.add_argument("--output", type=Path, default=Path("annotation_work/e9c_agreement.json"))
     parser.add_argument("--disagreements", type=Path,
                         default=Path("annotation_work/e9c_disagreements_private.csv"))
+    parser.add_argument("--source", choices=("human", "model"), default="human",
+                        help="Annotation source; identifies model-vs-model comparisons explicitly")
+    parser.add_argument("--model-a", default=None)
+    parser.add_argument("--model-b", default=None)
     args = parser.parse_args()
+    if args.source == "model" and (not args.model_a or not args.model_b or args.model_a == args.model_b):
+        parser.error("Model comparison requires --model-a and --model-b with distinct IDs")
 
     A = records(args.annotator_a)
     B = records(args.annotator_b)
@@ -87,7 +94,10 @@ def main():
 
     agreement = nominal_agreement(labels_a, labels_b)
     stats = {
-        "status": "HUMAN_ANNOTATION_COMPLETED",
+        "status": ("HUMAN_ANNOTATION_COMPLETED" if args.source == "human"
+                   else "GPT_GPT_MODEL_ANNOTATION_COMPLETED"),
+        "annotation_source": args.source,
+        "annotators": ([args.model_a, args.model_b] if args.source == "model" else ["human_A", "human_B"]),
         "label_definitions": {
             "D": "Direct mathematical concept coverage",
             "S": "General problem-solving strategy",
@@ -104,7 +114,8 @@ def main():
         "confusion_rows_A_columns_B": confusion,
         "disagreement_count": sum(a != b for a, b in zip(labels_a, labels_b)),
         "caution": ("Kappa is affected by prevalence and sampling. This stratified "
-                    "120-pair audit does not estimate population prevalence without weighting."),
+                    "120-pair audit does not estimate population prevalence without weighting. "
+                    "Agreement between two GPT models is not human inter-rater reliability."),
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(stats, indent=2), encoding="utf-8")
