@@ -161,3 +161,27 @@ python experiments/test_e13_features.py
 ```
 
 Private `annotation_work/` contains task IDs, event metadata, post-test outcomes and intermediate features. NEVER commit those private files. Source retrieval and full evaluation were executed in a separate remote environment. The detailed report discloses exploration and missingness assumptions.
+
+## E14 — LOCKED 125-session internal holdout (completed October 25, 2026)
+
+The [E14 protocol](../docs/E14_locked_internal_holdout_protocol_v0.1.md) was committed at `1e868b4685c3012386c8d121ad0f393da4fdf14a` **before** scoring the reserved E13 125 task IDs. The fixed C=0.3 Logistic Regression included the preselected E13 post-hoc attempt-count feature family; E13 development parity was verified to 1e-6 before holdout labels were evaluated.
+
+**Result: no replicated improvement.** B0 held-out Log Loss **0.538238**, attempt-provenance candidate **0.540086**, paired task-bootstrap improvement **−0.001848**, 95% CI **[−0.006090,+0.001470]**. Eighteen of twenty training-only task-block shuffles yielded lower loss than the unshuffled attempt-feature candidate. This is a **negative internal replication**, not external causal validation.
+
+- [Complete E14 report](../reports/E14_locked_internal_holdout_negative_replication_2026-10-25.md)
+- [Exact aggregate results and 20 negative controls](../reports/E14_internal_holdout_metrics_2026-10-25.json)
+- [Locked holdout runner](e14_locked_holdout.py)
+- [Synthetic invariants test](test_e14_locked_holdout.py)
+
+To reproduce on pinned official GRE Quant sessions:
+
+```bash
+python experiments/e13_collect_traces.py --output annotation_work/e13_private_trajectories.json.gz
+python experiments/e14_locked_holdout.py \
+  --input annotation_work/e13_private_trajectories.json.gz \
+  --output results/E14_locked_holdout_aggregate.json \
+  --bootstrap 10000 --null-seeds 20
+python experiments/test_e14_locked_holdout.py
+```
+
+No private session-level data or student answer records are committed. Do not tune or rescore on the 125 internal holdout sessions and call it an independent test.
