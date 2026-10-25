@@ -1,0 +1,30 @@
+{
+  "revision": "304c8d63c726e72b60510bba3a44454fc0726721",
+  "retrieval_selected": 624,
+  "retrieval_successful": 624,
+  "retrieval_failed": 0,
+  "total_groups": 624,
+  "n_reserved_task_groups": 125,
+  "n_development_task_groups": 499,
+  "n_dev_sessions": 499,
+  "n_reserved_sessions_unscored": 125,
+  "n_dev_posttest_items": 13473,
+  "n_shuffles": 20,
+  "all_event_counts": {
+    "ai_tutor_message": 30582,
+    "practice_problem_shown": 11678,
+    "student_message": 15249,
+    "practice_answer_submitted": 13262,
+    "practice_problem_created_during_tutoring": 7002,
+    "practice_problem_skipped": 359
+  },
+  "provenance_coverage": {
+    "sessions_with_scored_attempts": 499,
+    "sessions_with_repeat_attempts": 459,
+    "sessions_with_valid_time": 459
+  },
+  "baseline_counts_vs_trace": {
+    "mean_abs_diff_practice_submissions": 0,
+    "mean_abs_diff_final_correct": 0
+  }
+}
