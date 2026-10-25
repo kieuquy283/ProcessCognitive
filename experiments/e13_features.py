@@ -138,7 +138,7 @@ def features(sessions,seed=None):
         rows.append({**provenance,**counts,**seq})
     return pd.DataFrame(rows)
 
-def assemble(raw,shuffles=20):
+def assemble(raw,shuffles=20,subset="development"):
     bank={r["question_id"]:r for r in raw["bank"]}
     all_sessions=raw["sessions"]
     profiles=[s["profile"] for s in all_sessions]
@@ -149,7 +149,10 @@ def assemble(raw,shuffles=20):
     reserved_ids=set(shuffled[:round(.2*len(shuffled))])
     development=[i for i,p in enumerate(profiles) if p["student_id"] not in reserved_ids]
     reserved=[i for i,p in enumerate(profiles) if p["student_id"] in reserved_ids]
-    D=[all_sessions[i] for i in development]
+    if subset not in ("development","reserved"):
+        raise ValueError("subset must be development or reserved")
+    selected=development if subset=="development" else reserved
+    D=[all_sessions[i] for i in selected]
     actual=features(D)
     control=[features(D,seed=j+1) for j in range(shuffles)]
     # session-feature extraction is pure; no post-test information enters it.
