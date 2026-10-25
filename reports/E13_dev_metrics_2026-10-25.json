@@ -1,0 +1,408 @@
+{
+  "status": "EXPLORATORY_DEVELOPMENT_ONLY",
+  "primary_metric": "item-level LogLoss; paired task-ID-group bootstrap",
+  "n_items": 13473,
+  "n_groups": 499,
+  "n_sessions": 499,
+  "n_cv_folds": 4,
+  "negative_controls": 20,
+  "feature_dimensions": {
+    "baseline_numeric": 10,
+    "practice_provenance": 12,
+    "event_counts": 6,
+    "temporal": 31
+  },
+  "metrics": {
+    "C0.03/B0_strong": {
+      "LogLoss": 0.5249119993181557,
+      "Brier": 0.1740218200931969,
+      "AUC": 0.7750854225198297
+    },
+    "C0.03/N2_event_counts": {
+      "LogLoss": 0.5249997513405108,
+      "Brier": 0.1740291239755971,
+      "AUC": 0.7750544799199731
+    },
+    "C0.03/B1_practice_provenance": {
+      "LogLoss": 0.5241207549396,
+      "Brier": 0.17356044793792638,
+      "AUC": 0.7758785853272734
+    },
+    "C0.03/S1_sequence_no_timing": {
+      "LogLoss": 0.5270931349338868,
+      "Brier": 0.17471166904009847,
+      "AUC": 0.7726292134047033
+    },
+    "C0.03/B2_full_sequence": {
+      "LogLoss": 0.527893269931178,
+      "Brier": 0.17500728135614183,
+      "AUC": 0.7718045345245611
+    },
+    "C0.03/N1_shuffle_00": {
+      "LogLoss": 0.5290075116041953,
+      "Brier": 0.17537042452480286,
+      "AUC": 0.770636121009751
+    },
+    "C0.03/N1_shuffle_01": {
+      "LogLoss": 0.5288893639957576,
+      "Brier": 0.1753583098857797,
+      "AUC": 0.7704629820787243
+    },
+    "C0.03/N1_shuffle_02": {
+      "LogLoss": 0.5282033894397613,
+      "Brier": 0.17500436440588668,
+      "AUC": 0.7717266668860824
+    },
+    "C0.03/N1_shuffle_03": {
+      "LogLoss": 0.5297888832017146,
+      "Brier": 0.1758071590167311,
+      "AUC": 0.7697433484630429
+    },
+    "C0.03/N1_shuffle_04": {
+      "LogLoss": 0.5283545217322315,
+      "Brier": 0.1752887680840463,
+      "AUC": 0.7715884848648051
+    },
+    "C0.03/N1_shuffle_05": {
+      "LogLoss": 0.5280699884545181,
+      "Brier": 0.17501595961479938,
+      "AUC": 0.7717527474335844
+    },
+    "C0.03/N1_shuffle_06": {
+      "LogLoss": 0.5284609496331996,
+      "Brier": 0.17524590379802824,
+      "AUC": 0.7711207803618962
+    },
+    "C0.03/N1_shuffle_07": {
+      "LogLoss": 0.5285838698093878,
+      "Brier": 0.1752371357419199,
+      "AUC": 0.7709384658654005
+    },
+    "C0.03/N1_shuffle_08": {
+      "LogLoss": 0.5294136545782161,
+      "Brier": 0.17562116605497807,
+      "AUC": 0.7705534411861213
+    },
+    "C0.03/N1_shuffle_09": {
+      "LogLoss": 0.5282768996537633,
+      "Brier": 0.17528014316029392,
+      "AUC": 0.7710087786225281
+    },
+    "C0.03/N1_shuffle_10": {
+      "LogLoss": 0.5294523367778486,
+      "Brier": 0.17565156339416735,
+      "AUC": 0.7697652650990413
+    },
+    "C0.03/N1_shuffle_11": {
+      "LogLoss": 0.5296028982284909,
+      "Brier": 0.1755889912837643,
+      "AUC": 0.7701440563778658
+    },
+    "C0.03/N1_shuffle_12": {
+      "LogLoss": 0.5287276348285058,
+      "Brier": 0.1752984987602725,
+      "AUC": 0.7708564841826216
+    },
+    "C0.03/N1_shuffle_13": {
+      "LogLoss": 0.528605458948763,
+      "Brier": 0.17531827351497856,
+      "AUC": 0.7707766218559975
+    },
+    "C0.03/N1_shuffle_14": {
+      "LogLoss": 0.5290715141016229,
+      "Brier": 0.17556224698140807,
+      "AUC": 0.7706242775488873
+    },
+    "C0.03/N1_shuffle_15": {
+      "LogLoss": 0.5293808898916889,
+      "Brier": 0.17572797920112038,
+      "AUC": 0.7702591498838591
+    },
+    "C0.03/N1_shuffle_16": {
+      "LogLoss": 0.5312050724230116,
+      "Brier": 0.17627670547243168,
+      "AUC": 0.7679749327540759
+    },
+    "C0.03/N1_shuffle_17": {
+      "LogLoss": 0.5278538278440428,
+      "Brier": 0.17484855801009347,
+      "AUC": 0.7722621409187334
+    },
+    "C0.03/N1_shuffle_18": {
+      "LogLoss": 0.5276777473197183,
+      "Brier": 0.17471020557973474,
+      "AUC": 0.7719953264456751
+    },
+    "C0.03/N1_shuffle_19": {
+      "LogLoss": 0.5277824619963977,
+      "Brier": 0.1748143099196238,
+      "AUC": 0.7716782956985547
+    },
+    "C0.3/B0_strong": {
+      "LogLoss": 0.5243614134736273,
+      "Brier": 0.17353101257647893,
+      "AUC": 0.7759479256739303
+    },
+    "C0.3/N2_event_counts": {
+      "LogLoss": 0.5246653877840269,
+      "Brier": 0.17360629698398047,
+      "AUC": 0.7756941265410213
+    },
+    "C0.3/B1_practice_provenance": {
+      "LogLoss": 0.5236941874760767,
+      "Brier": 0.1730727470899611,
+      "AUC": 0.7766385365770951
+    },
+    "C0.3/S1_sequence_no_timing": {
+      "LogLoss": 0.5277303817593914,
+      "Brier": 0.17460338353951518,
+      "AUC": 0.7729019122077906
+    },
+    "C0.3/B2_full_sequence": {
+      "LogLoss": 0.5287070112764121,
+      "Brier": 0.17494607883053503,
+      "AUC": 0.7719771498499495
+    },
+    "C0.3/N1_shuffle_00": {
+      "LogLoss": 0.5302220948256521,
+      "Brier": 0.17542309600106126,
+      "AUC": 0.7702472066885884
+    },
+    "C0.3/N1_shuffle_01": {
+      "LogLoss": 0.5301663858580749,
+      "Brier": 0.17545071597229317,
+      "AUC": 0.7703233539085415
+    },
+    "C0.3/N1_shuffle_02": {
+      "LogLoss": 0.5288795993865025,
+      "Brier": 0.17487962878262175,
+      "AUC": 0.771862480215187
+    },
+    "C0.3/N1_shuffle_03": {
+      "LogLoss": 0.5297804425991229,
+      "Brier": 0.17533216655102835,
+      "AUC": 0.7707263806483335
+    },
+    "C0.3/N1_shuffle_04": {
+      "LogLoss": 0.5284862181991705,
+      "Brier": 0.17493429262017945,
+      "AUC": 0.7723208346174139
+    },
+    "C0.3/N1_shuffle_05": {
+      "LogLoss": 0.5287271636517111,
+      "Brier": 0.17484544755939427,
+      "AUC": 0.772075512909123
+    },
+    "C0.3/N1_shuffle_06": {
+      "LogLoss": 0.5295297203296487,
+      "Brier": 0.1751985067136644,
+      "AUC": 0.7710940515407471
+    },
+    "C0.3/N1_shuffle_07": {
+      "LogLoss": 0.5297002433098189,
+      "Brier": 0.17527383274159936,
+      "AUC": 0.7708994447785547
+    },
+    "C0.3/N1_shuffle_08": {
+      "LogLoss": 0.5298047632519994,
+      "Brier": 0.17524223342461157,
+      "AUC": 0.7714491558978439
+    },
+    "C0.3/N1_shuffle_09": {
+      "LogLoss": 0.5294115949357007,
+      "Brier": 0.17533485616511765,
+      "AUC": 0.7708449399249797
+    },
+    "C0.3/N1_shuffle_10": {
+      "LogLoss": 0.5309620106748735,
+      "Brier": 0.1758370211409796,
+      "AUC": 0.7693036942621798
+    },
+    "C0.3/N1_shuffle_11": {
+      "LogLoss": 0.5305567135914497,
+      "Brier": 0.1755536856869309,
+      "AUC": 0.7702027500765461
+    },
+    "C0.3/N1_shuffle_12": {
+      "LogLoss": 0.5297580733310588,
+      "Brier": 0.17525777133755077,
+      "AUC": 0.7708019543954449
+    },
+    "C0.3/N1_shuffle_13": {
+      "LogLoss": 0.5297690307684665,
+      "Brier": 0.17536400175708974,
+      "AUC": 0.7706853150061387
+    },
+    "C0.3/N1_shuffle_14": {
+      "LogLoss": 0.5303272657003375,
+      "Brier": 0.17565453155828745,
+      "AUC": 0.7706592344586367
+    },
+    "C0.3/N1_shuffle_15": {
+      "LogLoss": 0.5310385509078349,
+      "Brier": 0.17599673936315322,
+      "AUC": 0.7698067296788652
+    },
+    "C0.3/N1_shuffle_16": {
+      "LogLoss": 0.532595359069365,
+      "Brier": 0.17640825328971077,
+      "AUC": 0.7675552753018711
+    },
+    "C0.3/N1_shuffle_17": {
+      "LogLoss": 0.5281383487503527,
+      "Brier": 0.17453020625057303,
+      "AUC": 0.7729172962401126
+    },
+    "C0.3/N1_shuffle_18": {
+      "LogLoss": 0.5283106360711152,
+      "Brier": 0.174500429486621,
+      "AUC": 0.772308866488541
+    },
+    "C0.3/N1_shuffle_19": {
+      "LogLoss": 0.5284254609193562,
+      "Brier": 0.17458167352865728,
+      "AUC": 0.7719600204655003
+    }
+  },
+  "comparisons": {
+    "C0.03/B0_strong -> N2_event_counts": {
+      "improvement_positive_is_better": -0.00008775202235506322,
+      "CI95_task_cluster": [
+        -0.000310826019337024,
+        0.00011984624268427132
+      ]
+    },
+    "C0.03/B0_strong -> B1_practice_provenance": {
+      "improvement_positive_is_better": 0.0007912443785557039,
+      "CI95_task_cluster": [
+        -0.0013449060784569687,
+        0.0028769094354039954
+      ]
+    },
+    "C0.03/N2_event_counts -> B1_practice_provenance": {
+      "improvement_positive_is_better": 0.0008789964009107675,
+      "CI95_task_cluster": [
+        -0.0011337169338210662,
+        0.0029174349862823097
+      ]
+    },
+    "C0.03/B1_practice_provenance -> S1_sequence_no_timing": {
+      "improvement_positive_is_better": -0.0029723799942867808,
+      "CI95_task_cluster": [
+        -0.005344638561689334,
+        -0.0006184362378249246
+      ]
+    },
+    "C0.03/B1_practice_provenance -> B2_full_sequence": {
+      "improvement_positive_is_better": -0.0037725149915780257,
+      "CI95_task_cluster": [
+        -0.006513108374808599,
+        -0.001316529395766348
+      ]
+    },
+    "C0.03/B0_strong -> B2_full_sequence": {
+      "improvement_positive_is_better": -0.0029812706130223215,
+      "CI95_task_cluster": [
+        -0.006381592042254769,
+        0.00026702258142997524
+      ]
+    },
+    "C0.03/B2_vs_20_shuffles": {
+      "actual_logloss": 0.527893269931178,
+      "shuffle_median_logloss": 0.5286665468886345,
+      "shuffle_min_max_logloss": [
+        0.5276777473197183,
+        0.5312050724230116
+      ],
+      "shuffles_worse_than_actual": 17,
+      "task_cluster_gain_median": 0.0007732769574564271,
+      "task_cluster_gain_range": [
+        -0.00021552261145973617,
+        0.003311802491833681
+      ],
+      "warning": "Shuffles preserve event counts and first/final practice provenance; they do not always preserve physiologically possible event transition structure."
+    },
+    "C0.03/B2_vs_B0_matched_pretest_0": {
+      "n_items": 6595,
+      "logloss_delta_item_mean": -0.0017218647910719333
+    },
+    "C0.03/B2_vs_B0_matched_pretest_1": {
+      "n_items": 6878,
+      "logloss_delta_item_mean": -0.004188857323659543
+    },
+    "C0.3/B0_strong -> N2_event_counts": {
+      "improvement_positive_is_better": -0.000303974310399685,
+      "CI95_task_cluster": [
+        -0.0005975857921495466,
+        -0.000014461901058719608
+      ]
+    },
+    "C0.3/B0_strong -> B1_practice_provenance": {
+      "improvement_positive_is_better": 0.0006672259975506224,
+      "CI95_task_cluster": [
+        -0.0016963594599512918,
+        0.0030379729107060304
+      ]
+    },
+    "C0.3/N2_event_counts -> B1_practice_provenance": {
+      "improvement_positive_is_better": 0.0009712003079503074,
+      "CI95_task_cluster": [
+        -0.0013748519937607263,
+        0.0033117384056010387
+      ]
+    },
+    "C0.3/B1_practice_provenance -> S1_sequence_no_timing": {
+      "improvement_positive_is_better": -0.00403619428331471,
+      "CI95_task_cluster": [
+        -0.00683753337226514,
+        -0.0012387156000099107
+      ]
+    },
+    "C0.3/B1_practice_provenance -> B2_full_sequence": {
+      "improvement_positive_is_better": -0.005012823800335463,
+      "CI95_task_cluster": [
+        -0.008161192716730487,
+        -0.002159183128019071
+      ]
+    },
+    "C0.3/B0_strong -> B2_full_sequence": {
+      "improvement_positive_is_better": -0.004345597802784843,
+      "CI95_task_cluster": [
+        -0.008285966573612571,
+        -0.0005190598651790833
+      ]
+    },
+    "C0.3/B2_vs_20_shuffles": {
+      "actual_logloss": 0.5287070112764121,
+      "shuffle_median_logloss": 0.5297635520497627,
+      "shuffle_min_max_logloss": [
+        0.5281383487503527,
+        0.532595359069365
+      ],
+      "shuffles_worse_than_actual": 16,
+      "task_cluster_gain_median": 0.0010565407733505536,
+      "task_cluster_gain_range": [
+        -0.0005686625260593347,
+        0.003888347792952769
+      ],
+      "warning": "Shuffles preserve event counts and first/final practice provenance; they do not always preserve physiologically possible event transition structure."
+    },
+    "C0.3/B2_vs_B0_matched_pretest_0": {
+      "n_items": 6595,
+      "logloss_delta_item_mean": -0.0032777331796986064
+    },
+    "C0.3/B2_vs_B0_matched_pretest_1": {
+      "n_items": 6878,
+      "logloss_delta_item_mean": -0.005369524407794106
+    }
+  },
+  "limitations": [
+    "Post-test is not a causal learning-gain estimator",
+    "The same task ID may occur across tutor arms; all CV folds grouped by task ID",
+    "Missing remote files create available-case selection risk",
+    "Multiple exploratory models/C; intervals are not selection-adjusted",
+    "Reserved task IDs must not be scored during method development",
+    "A shuffled event stream need not obey valid pedagogical temporal logic",
+    "No direct transcript semantics or human-coded reasoning quality in this experiment"
+  ]
+}
