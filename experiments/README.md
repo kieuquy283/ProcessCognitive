@@ -121,3 +121,43 @@ Exploratory E12a grouped OOF silver-label tests and E12b on 456 development sess
 **Important:** The 400 private GPT-6 Astra labels are SILVER by research assumption, NOT verified human truth. The remote run fully downloaded 582/624 targeted sessions; 126 reserved sessions were not scored. A positive model-label F1 does not imply added posttest predictive validity.
 
 The proposed next gate is [E13 practice-process and temporal evidence protocol](../docs/E13_practice_process_temporal_protocol_v0.1.md), **not yet executed**.
+
+## E13 — Actual event-level practice-process evaluation (2026-10-25)
+
+**Executed**, not just proposed. Source revision `304c8d63c726e72b60510bba3a44454fc0726721`; 624/624 targeted GRE Quant sessions retrieved; **499 development sessions, 13,473 out-of-fold post-test items, 125 unscored reserved**. Four-fold CV groups by `student_id`/task ID.
+
+- B0 strong baseline Log Loss: **0.524912** (C=.03).
+- B1 + practice first/final and resubmission provenance: **0.524121**; session-bootstrap benefit CI crosses zero.
+- B2 + all ordered/timed events: **0.527893**; significantly worse vs B1 in the conditional task-bootstrap comparison.
+- Twenty sequence-shuffled controls have median Log Loss **0.528667**; genuine B2 order sometimes helps over corrupted event orders, **but not enough to beat B0/B1**.
+- Exploratory narrow attempt-distribution family reaches **0.523731**, though its cluster-bootstrap CI of incremental gain crosses zero. NO-GO for full B2; restricted E14 replication is only a proposal.
+- **No final 125-session reserved test run.** Not a validated causal mastery model.
+
+Complete evidence: [E13 research report](../reports/E13_practice_process_temporal_real_results_2026-10-25.md), [source audit](../reports/E13_feature_audit_2026-10-25.json), [all development metrics and 20 null controls](../reports/E13_dev_metrics_2026-10-25.json), [exploratory ablations](../reports/E13_exploratory_ablation_2026-10-25.json).
+
+Reproduce (Python packages numpy, pandas, scikit-learn, scipy; network for official data):
+
+```bash
+python experiments/e13_collect_traces.py \
+  --output annotation_work/e13_private_trajectories.json.gz
+
+python experiments/e13_features.py \
+  --input annotation_work/e13_private_trajectories.json.gz \
+  --output annotation_work/e13_features_private.pkl \
+  --audit results/E13_feature_audit.json \
+  --shuffles 20
+
+python experiments/e13_evaluate.py \
+  --input annotation_work/e13_features_private.pkl \
+  --output results/E13_dev_metrics.json \
+  --boot 3000
+
+python experiments/e13_exploratory_ablation.py \
+  --input annotation_work/e13_features_private.pkl \
+  --output results/E13_exploratory_ablation.json
+
+# Synthetic tests never use real student records.
+python experiments/test_e13_features.py
+```
+
+Private `annotation_work/` contains task IDs, event metadata, post-test outcomes and intermediate features. NEVER commit those private files. Source retrieval and full evaluation were executed in a separate remote environment. The detailed report discloses exploration and missingness assumptions.
