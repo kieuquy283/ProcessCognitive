@@ -185,3 +185,25 @@ python experiments/test_e14_locked_holdout.py
 ```
 
 No private session-level data or student answer records are committed. Do not tune or rescore on the 125 internal holdout sessions and call it an independent test.
+
+## ND1 — New research direction after E7–E14 (2026-10-25)
+
+**Research pivot:** stop searching for pre/posttest Log Loss lift with concept-title alignment or raw event sequences; assess *observable student conversational acts* and *feedback uptake* as separate educational constructs, with reliability assessed before model training.
+
+- [Scientific redesign report in Vietnamese](../reports/ProcessCognitive_E7-E14_review_ND1_research_redesign_2026-10-25.md)
+- [Frozen pilot codebook v0.1](../docs/ND1_behavioral_moves_feedback_uptake_codebook_v0.1.md)
+- [Operational runbook for pilot blind double annotation](../docs/ND1_pilot_runbook_2026-10-25.md)
+- [Pinned StudentBench real-episode extractor](nd1_extract_feedback_episodes.py)
+- [Annotation CSV format validator](nd1_validate_annotations.py)
+- [Agreement calculation after two independent labels](nd1_agreement.py)
+- [Actual extraction aggregate (no text/PII)](../reports/ND1_real_pilot_extraction_audit_2026-10-25.json)
+
+Real first run: **78/78 GRE Quant sessions retrieved, 1,795 eligible student-turn candidates, 180 UNIQUE unlabeled episodes, 68 distinct sessions, 13 tutor arms.** No gold human labels, no new classifier trained, no behavioral outcome analyzed. Private dialogue texts and sidecars MUST remain in ignored `annotation_work/`. The very first 40-case double annotation is a feasibility test. A separate synthetic test validated the CSV checker and agreement script, but synthetic κ is NOT research data.
+
+To reproduce the 180 real episodes:
+
+```bash
+python experiments/nd1_extract_feedback_episodes.py \
+  --out annotation_work/new_direction/nd1_pilot_180_PRIVATE.csv \
+  --n 180 --per-arm 6
+```
