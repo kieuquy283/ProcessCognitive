@@ -1,0 +1,240 @@
+{
+  "status": "ONE_INTERNAL_HOLDOUT_EVALUATION_LOCKED_E14",
+  "protocol": "docs/E14_locked_internal_holdout_protocol_v0.1.md",
+  "pre_holdout_frozen_protocol_commit": "1e868b4685c3012386c8d121ad0f393da4fdf14a",
+  "revision": "304c8d63c726e72b60510bba3a44454fc0726721",
+  "n_retrieved_sessions": 624,
+  "n_dev_sessions": 499,
+  "n_holdout_sessions": 125,
+  "n_dev_posttest_items": 13473,
+  "n_holdout_posttest_items": 3375,
+  "n_dev_task_ids": 499,
+  "n_holdout_task_ids": 125,
+  "hyperparameter_C": 0.3,
+  "dev_parity_check": {
+    "B0_LogLoss": 0.5243614134736273,
+    "Attempt_LogLoss": 0.5232622060011117
+  },
+  "primary": "B0 -> P_attempts_LOCKED",
+  "holdout_scores": {
+    "B0": {
+      "LogLoss": 0.5382380328432086,
+      "Brier": 0.17885082251282108,
+      "AUC": 0.7598105423375792
+    },
+    "N2_event_counts": {
+      "LogLoss": 0.5383344204819128,
+      "Brier": 0.17890999695537046,
+      "AUC": 0.7596463189938315
+    },
+    "P_attempts_LOCKED": {
+      "LogLoss": 0.5400864732759952,
+      "Brier": 0.1797467193893405,
+      "AUC": 0.7577417287511015
+    },
+    "P_first_secondary": {
+      "LogLoss": 0.5404765278688345,
+      "Brier": 0.17961492442115748,
+      "AUC": 0.7577357205799888
+    },
+    "P_first_plus_attempts_secondary": {
+      "LogLoss": 0.5404269977254132,
+      "Brier": 0.17974706949151872,
+      "AUC": 0.7575382520227509
+    }
+  },
+  "paired_task_cluster_comparisons": {
+    "B0 -> P_attempts_LOCKED": {
+      "positive_means_candidate_better": -0.0018484404327865852,
+      "ci95_task_bootstrap": [
+        -0.0060897885419006976,
+        0.0014697346258026648
+      ],
+      "point_item_weighted": -0.0018484404327865857,
+      "n_task_groups": 125,
+      "ci_contains_zero": true
+    },
+    "N2_event_counts -> P_attempts_LOCKED": {
+      "positive_means_candidate_better": -0.0017520527940823503,
+      "ci95_task_bootstrap": [
+        -0.006247965714704939,
+        0.001631232218638536
+      ],
+      "point_item_weighted": -0.0017520527940823511,
+      "n_task_groups": 125,
+      "ci_contains_zero": true
+    },
+    "B0 -> N2_event_counts": {
+      "positive_means_candidate_better": -0.00009638763870423509,
+      "ci95_task_bootstrap": [
+        -0.0004177607151034377,
+        0.0002244119873135081
+      ],
+      "point_item_weighted": -0.00009638763870423506,
+      "n_task_groups": 125,
+      "ci_contains_zero": true
+    },
+    "B0 -> P_first_secondary": {
+      "positive_means_candidate_better": -0.00223849502562589,
+      "ci95_task_bootstrap": [
+        -0.004969836793578751,
+        0.00028277026545691226
+      ],
+      "point_item_weighted": -0.00223849502562589,
+      "n_task_groups": 125,
+      "ci_contains_zero": true
+    },
+    "B0 -> P_first_plus_attempts_secondary": {
+      "positive_means_candidate_better": -0.0021889648822046824,
+      "ci95_task_bootstrap": [
+        -0.005600997792351422,
+        0.0007652509747067314
+      ],
+      "point_item_weighted": -0.0021889648822046833,
+      "n_task_groups": 125,
+      "ci_contains_zero": true
+    },
+    "P_first_secondary -> P_attempts_LOCKED": {
+      "positive_means_candidate_better": 0.0003900545928393036,
+      "ci95_task_bootstrap": [
+        -0.0025547691901822017,
+        0.003073932567121855
+      ],
+      "point_item_weighted": 0.0003900545928393038,
+      "n_task_groups": 125,
+      "ci_contains_zero": true
+    }
+  },
+  "holdout_attempt_shuffle_null": {
+    "n_null_shuffles": 20,
+    "null_shuffle_rule": "permute entire attempt-provenance feature block across TRAINING TASK IDs only",
+    "test_attempt_feature_values_unchanged": true,
+    "null_loss_median": 0.5384525864644034,
+    "null_loss_min": 0.5377341262781664,
+    "null_loss_max": 0.541166647949201,
+    "true_attempt_loss": 0.5400864732759952,
+    "null_losses_worse_than_true": 2,
+    "all_null_losses": [
+      0.5380687313615986,
+      0.5381582383333389,
+      0.5380121549534465,
+      0.5382561419354519,
+      0.5396547759645557,
+      0.5398107347810231,
+      0.5377341262781664,
+      0.5379786118374703,
+      0.5386048420216883,
+      0.5401636539927706,
+      0.5380340981092923,
+      0.5386772182009766,
+      0.5387846940309627,
+      0.5384176493029456,
+      0.5386347971981349,
+      0.5384875236258612,
+      0.5386322787179978,
+      0.538261485795311,
+      0.5380367199251809,
+      0.541166647949201
+    ]
+  },
+  "holdout_tutor_arm_descriptives": {
+    "gemini-3.1-pro-high": {
+      "tasks": 12,
+      "items": 324,
+      "B0_Loss": 0.5157073799932557,
+      "Attempt_Loss": 0.531852484855437,
+      "gain": -0.016145104862181348
+    },
+    "gemini-3.5-flash-low": {
+      "tasks": 8,
+      "items": 216,
+      "B0_Loss": 0.4682368796953523,
+      "Attempt_Loss": 0.4783698960801272,
+      "gain": -0.010133016384774873
+    },
+    "gemini-3.6-flash-low": {
+      "tasks": 6,
+      "items": 162,
+      "B0_Loss": 0.4783293346076437,
+      "Attempt_Loss": 0.48059317300371635,
+      "gain": -0.002263838396072637
+    },
+    "gemini-3.7-flash-medium": {
+      "tasks": 8,
+      "items": 216,
+      "B0_Loss": 0.5056879072638835,
+      "Attempt_Loss": 0.5088762273620993,
+      "gain": -0.003188320098215791
+    },
+    "gemma-4-31b-high": {
+      "tasks": 10,
+      "items": 270,
+      "B0_Loss": 0.47179882534390993,
+      "Attempt_Loss": 0.4709604367858296,
+      "gain": 0.0008383885580803274
+    },
+    "gpt-5.4-mini-none": {
+      "tasks": 9,
+      "items": 243,
+      "B0_Loss": 0.6074085037685913,
+      "Attempt_Loss": 0.6096194308217796,
+      "gain": -0.0022109270531882608
+    },
+    "gpt-5.5-high": {
+      "tasks": 8,
+      "items": 216,
+      "B0_Loss": 0.4855089105588481,
+      "Attempt_Loss": 0.48429393917061775,
+      "gain": 0.001214971388230346
+    },
+    "gpt-5.5-pro-med": {
+      "tasks": 10,
+      "items": 270,
+      "B0_Loss": 0.4492960250350357,
+      "Attempt_Loss": 0.4497731762359969,
+      "gain": -0.0004771512009612011
+    },
+    "kimi-k2.6": {
+      "tasks": 10,
+      "items": 270,
+      "B0_Loss": 0.536188776939775,
+      "Attempt_Loss": 0.5387829681425405,
+      "gain": -0.0025941912027654945
+    },
+    "opus-4.8-off": {
+      "tasks": 9,
+      "items": 243,
+      "B0_Loss": 0.6406213130959296,
+      "Attempt_Loss": 0.639654060446603,
+      "gain": 0.000967252649326622
+    },
+    "opus-4.8-xhigh": {
+      "tasks": 9,
+      "items": 243,
+      "B0_Loss": 0.589968769948545,
+      "Attempt_Loss": 0.5807503788355137,
+      "gain": 0.009218391113031243
+    },
+    "opus-5-high": {
+      "tasks": 12,
+      "items": 324,
+      "B0_Loss": 0.6016279278016848,
+      "Attempt_Loss": 0.5985041109254086,
+      "gain": 0.0031238168762762752
+    },
+    "sonnet-4.6-low": {
+      "tasks": 14,
+      "items": 378,
+      "B0_Loss": 0.586532947826175,
+      "Attempt_Loss": 0.5875192734732472,
+      "gain": -0.0009863256470721282
+    }
+  },
+  "warnings": [
+    "Holdout is INTERNAL: E13 chose the attempt feature family post hoc from same public dataset research program.",
+    "Do not call this an independent external prospective replication.",
+    "Bootstrap CI is conditional on frozen trained models and task sample; no multiple-testing adjustment.",
+    "No causal claim about learning gain, corrective feedback or AI tutoring efficacy.",
+    "No individual predictions, raw dialogue, student IDs or item outcomes exported."
+  ]
+}
