@@ -32,8 +32,8 @@ def validate(source,output,n_expected=180,allow_partial=False):
         if y["feedback_uptake"] not in UPTAKE:raise ValueError(f"Invalid uptake on row {i}")
         if y["confidence"] not in CONF:raise ValueError(f"Invalid confidence on row {i}")
         rationale=y["annotation_rationale"].strip()
-        if len(rationale.split())<3 or len(rationale.split())>45:
-            raise ValueError(f"Rationale must have 3–45 words on row {i}")
+        if len(rationale.split())<8 or len(rationale.split())>35:
+            raise ValueError(f"Rationale must have 8–35 words on row {i}")
         completed+=1;labels[y["primary_act"]]+=1;uptakes[y["feedback_uptake"]]+=1
     return {"status":"VALID_FORMAT_NOT_HUMAN_LABEL_ACCURACY",
             "cases":n_expected,"completed":completed,
