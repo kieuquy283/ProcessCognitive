@@ -1,0 +1,30 @@
+{
+  "status": "REAL_EPISODES_EXTRACTED_UNLABELED",
+  "source_dataset": "handshake-ai-research/studentbench",
+  "dataset_sha": "304c8d63c726e72b60510bba3a44454fc0726721",
+  "selected_sessions": 78,
+  "retrieved_sessions": 78,
+  "failed_sessions": 0,
+  "student_turn_candidates": 1795,
+  "sampled_episodes": 180,
+  "sampled_unique_sessions": 68,
+  "tutor_arms_present": 13,
+  "panel_counts": {
+    "reasoning_candidate": 54,
+    "feedback_followup_candidate": 45,
+    "short_response_candidate": 45,
+    "unrestricted_other": 36
+  },
+  "max_episodes_per_session": 4,
+  "preceding_tutor_matched_problem_id_share": 0.9944444444444445,
+  "excerpts_truncated_episodes": 37,
+  "human_labels_completed": 0,
+  "comparison_scores_completed": 0,
+  "notes": [
+    "Pilot strata are purely lexical heuristics used only for purposive selection; they are NOT behavioral labels or true prevalence.",
+    "No independent posttest outcomes or downstream practice correctness were accessed for extraction.",
+    "Transcript text may contain PII; do not commit the private 180-row CSV to public GitHub.",
+    "A repeated/nearby tutoring response may not be feedback. Human coders should use NO/UN as appropriate.",
+    "All 180 original private annotation cases are reproducible by running the pinned extraction script."
+  ]
+}
