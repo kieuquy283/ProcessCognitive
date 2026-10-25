@@ -55,7 +55,8 @@ def candidate(session_path,rows):
                 if 0<dist<=9 and same:
                     student=sanitize(e.get("content"),700)
                     tutor=sanitize(prior.get("content"),950)
-                    preceding=sanitize(last_student.get("content"),260) if last_student else ""
+                    preceding=(sanitize(last_student.get("content"),260) if last_student and
+                               last_student.get("practice_problem_id")==e.get("practice_problem_id") else "")
                     evidence=(
                       "reasoning_candidate" if POSITIVE.search(student) and len(student)>38
                       else "feedback_followup_candidate" if FOLLOWUP.search(student)
