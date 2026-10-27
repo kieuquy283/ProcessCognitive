@@ -45,7 +45,7 @@ python experiments/nd2_session_aggregate.py --data data/studentbench
 python experiments/nd2_session_weighting.py annotation_work/nd2/context_session_aggregate_private.csv
 ```
 
-The local aggregate CSV remains outside version control. The previously existing ND2 sampling/evaluation Python implementation has undergone additional provenance guard fixes and **three synthetic tests passed**, but the full sampler/evaluator is **still a local artifact, not present in this PR**.
+The local aggregate CSV remains outside version control. The ND2 sampling/evaluation implementation is now committed as `experiments/nd2_pipeline.py`, together with three synthetic-only regression tests. The local code has passed all three tests. These tests do not establish model performance on authentic ND2 annotations. The private ND1 provenance mapping is still required.
 
 ## Current ND2 evaluation status
 - Official frame discovery: 2,139 AI-arm session *directories* (not all certified eligible).
