@@ -1,0 +1,62 @@
+{
+  "eligible_sessions": 2139,
+  "eligible_chat_turns": 52646,
+  "seed": 27102026,
+  "random_n": 200,
+  "challenge_n": 80,
+  "random_by_domain": {
+    "gre_quant": 107,
+    "gre_verbal": 93
+  },
+  "challenge_by_domain": {
+    "gre_verbal": 48,
+    "gre_quant": 32
+  },
+  "random_by_tutor_arm": {
+    "ai_arm_opus-5-high": 12,
+    "ai_arm_gemini-3.5-flash-low": 9,
+    "ai_arm_gpt-5.5-high": 17,
+    "ai_arm_gpt-5.5-pro-med": 15,
+    "ai_arm_kimi-k2.6": 18,
+    "ai_arm_gemma-4-31b-high": 13,
+    "ai_arm_gemini-3.7-flash-medium": 17,
+    "ai_arm_gemini-3.6-flash-low": 15,
+    "ai_arm_gpt-5.4-mini-none": 18,
+    "ai_arm_opus-4.8-off": 15,
+    "ai_arm_sonnet-4.6-low": 10,
+    "ai_arm_opus-4.8-xhigh": 22,
+    "ai_arm_sonnet-5-low": 8,
+    "ai_arm_gemini-3.1-pro-high": 11
+  },
+  "challenge_keyword_buckets": [
+    {
+      "bucket": "coordination",
+      "available_after_prior_buckets": 168,
+      "chosen": 20
+    },
+    {
+      "bucket": "reason_verify",
+      "available_after_prior_buckets": 236,
+      "chosen": 20
+    },
+    {
+      "bucket": "help_clarify",
+      "available_after_prior_buckets": 483,
+      "chosen": 20
+    },
+    {
+      "bucket": "feedback",
+      "available_after_prior_buckets": 235,
+      "chosen": 20
+    }
+  ],
+  "within_preflight_session_overlap": 0,
+  "nd1_session_overlap_certified": false,
+  "annotation_status": "NONE: Astra/Claude not invoked",
+  "interpretation": "Sampling feasibility only; no ND1-source mapping or ND2 labels. Aggregate output only.",
+  "provenance": {
+    "workflow_run": "https://github.com/kieuquy283/ProcessCognitive/actions/runs/40556663031",
+    "dataset_revision": "304c8d63c726e72b60510bba3a44454fc0726721",
+    "result_kind": "population_sampling_feasibility_no_annotation"
+  }
+}
