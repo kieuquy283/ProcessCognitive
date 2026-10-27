@@ -37,6 +37,11 @@ Nguồn: StudentBench official Hugging Face, pinned SHA 304c8d63c726e72b60510bba
 ## G1 — Chuyển sang mô hình dự đoán
 Chỉ khi codebook và nhãn đạt khả năng diễn giải, có đủ support, và đã gỡ lỗi nghiêm trọng. Accuracy cao trên AC/AP không đủ; cần phân tích NO/NR/UN, lỗi AK/OT và RE/VE. Nếu không đạt: REVISE hoặc RECONSIDER, không tiếp tục giả định ontology đúng.
 
+## ND3-preflight — Khảo sát khả năng dự báo bằng baseline trước khi chi phí gán nhãn lớn
+- Tạo bảng outcome (pretest, posttest) và đặc trưng sự kiện đơn giản trên các session hợp lệ, kiểm tra sai lệch và missingness **mà không sử dụng nhãn hành vi**. Không đưa kết quả posttest vào feature input.
+- Chốt session split và khóa final test trước mọi phép chọn mô hình. Chạy B0/B1/B2 trên **development train/validation only** để xác nhận baseline có thể tính được và xác định learning curve/khối lượng nhãn hợp lý. Không nhìn metric final test khi điều chỉnh phương pháp.
+- Sau khi chốt bộ ND3, tất cả baseline và mô hình có nhãn **phải so sánh trên cùng tập session và cùng folds**; B2 dự đoán trên 2.139 session không được đem so trực tiếp với M3 chỉ có nhãn trên 400–600 session.
+
 ## ND3 — Cần **nhiều lượt được gán nhãn trong một session**
 - 280 bản ND2 hiện chỉ có **một lượt/session**, không dùng để đánh giá chuỗi. Chọn một mẫu ND3 khác, source-session disjoint ND1/ND2.
 - Pilot **40–60 session**, gán toàn bộ student_message theo thứ tự; kiểm tra chi phí và tính nhất quán. Nếu khả thi, mục tiêu 400–600 session, khoảng **9.800–14.800 lượt chat** theo trung bình 24,6 lượt/session. Dùng Astra một nguồn reference để giảm chi phí; Claude và người chấm kiểm tra subset, ghi rõ mức silver label.
