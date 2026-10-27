@@ -30,9 +30,13 @@ jobs:
         run: python experiments/nd2_fetch_studentbench.py --data-dir data/studentbench
       - name: Produce aggregate-only frame audit
         run: python experiments/nd2_full_frame_audit.py --data data/studentbench --out results/nd2_full_frame_aggregate.json
+      - name: Preflight real 200+80 session sampling (NOT ND1-disjoint)
+        run: python experiments/nd2_real_sampling_preflight.py --data data/studentbench --out results/nd2_sampling_preflight_aggregate.json
       - name: Upload aggregate metrics only
         uses: actions/upload-artifact@v4
         with:
           name: nd2-aggregate-frame-audit
-          path: results/nd2_full_frame_aggregate.json
+          path: |
+            results/nd2_full_frame_aggregate.json
+            results/nd2_sampling_preflight_aggregate.json
           retention-days: 7
