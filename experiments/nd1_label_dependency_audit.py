@@ -57,6 +57,16 @@ def audit(astra,claude,permutations=10000,seed=20261028):
     rng=np.random.default_rng(seed)
     ge=sum(mutual_info_score(act,rng.permutation(uptake))>=mi for _ in range(permutations))
     oracle=loocv_reference_conditional(a)
+    # Operational diagnostic: predict the held-out uptake from Claude's primary act,
+    # with the lookup fitted only on the OTHER 39 Astra episode labels.
+    operational=[]
+    for i in range(len(a)):
+        train=a.drop(index=i)
+        pool=train.loc[train.primary_act==c.iloc[i].primary_act,'feedback_uptake']
+        if pool.empty:pool=train.feedback_uptake
+        counts=pool.value_counts()
+        operational.append(sorted(counts[counts==max(counts)].index)[0])
+    operational=np.asarray(operational)
     c_u=(c.feedback_uptake.to_numpy()==uptake);o_u=(oracle==uptake)
     p_correct=(c.primary_act.to_numpy()==act)
     result['relationship']={
@@ -65,6 +75,8 @@ def audit(astra,claude,permutations=10000,seed=20261028):
         'permutations':permutations,'seed':seed,
         'loocv_uptake_from_astra_act_accuracy_oracle':float(o_u.mean()),
         'claude_uptake_vs_oracle_mcnemar':mcnemar(c_u,o_u),
+        'loocv_uptake_from_claude_primary_accuracy_operational':float(np.mean(operational==uptake)),
+        'claude_uptake_vs_operational_mcnemar':mcnemar(c_u,operational==uptake),
         'caution':'Astra primary act is provided as an ORACLE to the conditional rule at test time, not a deployable model.'}
     cells=[int(np.sum(p_correct & c_u)),int(np.sum(p_correct & ~c_u)),
            int(np.sum(~p_correct & c_u)),int(np.sum(~p_correct & ~c_u))]
