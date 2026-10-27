@@ -29,6 +29,8 @@ def main():
         raise SystemExit("Install with: python -m pip install huggingface_hub>=1.0") from e
     snapshot_download(repo_id=REPO, repo_type="dataset", revision=a.revision,
                       allow_patterns=PATTERNS, local_dir=str(dest))
+    # This is local provenance metadata, not proof of upstream file integrity.
+    (dest / '.studentbench_revision').write_text(a.revision + '\n', encoding='utf-8')
     paths = sorted(dest.glob("1_main_leaderboard_data/gre_*/ai_arm_*/task_id_*/ai_tutoring_data/student_ai_tutor_interaction_trajectory.csv"))
     print(f"Official StudentBench revision: {a.revision}")
     print(f"GRE AI trajectories downloaded: {len(paths)}")
