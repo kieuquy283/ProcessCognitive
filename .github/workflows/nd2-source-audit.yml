@@ -1,0 +1,42 @@
+name: ND2 pinned StudentBench aggregate audit
+
+on:
+  push:
+    branches:
+      - nd2/implementation-preparation-2026-10-27
+    paths:
+      - .github/workflows/nd2-source-audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pinned-source-frame:
+    name: Audit official GRE tutoring session frame
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dataset client
+        run: python -m pip install --disable-pip-version-check huggingface_hub pandas numpy scikit-learn
+      - name: Download only pinned tutoring trajectories (no commits)
+        env:
+          HF_HUB_DISABLE_PROGRESS_BARS: '1'
+          HF_HUB_DISABLE_TELEMETRY: '1'
+        run: python experiments/nd2_fetch_studentbench.py --data-dir data/studentbench
+      - name: Produce aggregate-only frame audit
+        run: python experiments/nd2_full_frame_audit.py --data data/studentbench --out results/nd2_full_frame_aggregate.json
+      - name: Preflight real 200+80 session sampling (NOT ND1-disjoint)
+        run: python experiments/nd2_real_sampling_preflight.py --data data/studentbench --out results/nd2_sampling_preflight_aggregate.json
+      - name: Upload aggregate metrics only
+        uses: actions/upload-artifact@v4
+        with:
+          name: nd2-aggregate-frame-audit
+          path: |
+            results/nd2_full_frame_aggregate.json
+            results/nd2_sampling_preflight_aggregate.json
+          retention-days: 7
