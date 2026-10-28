@@ -109,6 +109,20 @@ def source_revision_audit(root):
         raise ValueError('Source snapshot revision differs from pinned ND2 protocol')
     return {'revision_record_found':True,'revision_record_matches_expected':True}
 
+def verify_attested_nd1_mapping(nd1_file,mapping_file,attestation_file):
+    """Document independent source review; no attestation may be fabricated."""
+    if not attestation_file:return False
+    if not mapping_file:raise ValueError('Cannot attest ND1 provenance without --nd1-sessions')
+    obj=json.loads(Path(attestation_file).read_text(encoding='utf-8'))
+    if obj.get('source_revision')!=SOURCE_REVISION:
+        raise ValueError('ND1 attestation source revision mismatch')
+    if obj.get('nd1_sha256')!=sha(nd1_file) or obj.get('mapping_sha256')!=sha(mapping_file):
+        raise ValueError('ND1 attestation SHA mismatch; re-review changed source or mapping')
+    if not (obj.get('reviewed_by') and obj.get('reviewed_at') and
+            obj.get('mapping_decision')=='approved' and obj.get('all_40_verified') is True):
+        raise ValueError('ND1 mapping independent review approval is missing')
+    return True
+
 def make(args):
     nd1=getcsv(args.nd1); old={x['episode_id'] for x in nd1}
     if len(old)!=len(nd1) or not old:raise ValueError('Empty or duplicate ND1 IDs')
@@ -120,6 +134,7 @@ def make(args):
     # Sample one turn per session to prevent within-ND2 clustering; ensure ND2 is
     # strictly session-disjoint from ND1 only where ND1 session mapping is known.
     forbidden=load_nd1_sessions(args.nd1_sessions,nd1) if args.nd1_sessions else set()
+    map_reviewed=verify_attested_nd1_mapping(args.nd1,args.nd1_sessions,args.provenance_attestation)
     for k in forbidden:by_session.pop(k,None)
     if len(by_session)<280:raise ValueError(f'{len(by_session)} sessions available; need 280 disjoint sessions. No turn-level fallback permitted.')
     rnd=random.Random(args.seed)
@@ -158,7 +173,7 @@ def make(args):
              'sessions_disjoint_within_nd2':True,
              'nd1_mapping_completeness_validated':bool(args.nd1_sessions),
              'nd1_session_overlap_verified':bool(args.nd1_sessions),
-             'nd1_mapping_provenance_independently_verified':False,
+             'nd1_mapping_provenance_independently_verified':map_reviewed,
              'source_revision_audit':source_audit,
              'warning':('Private ND1 mapping supplied and schema/coverage validated; source-session attribution still requires independent provenance review.' if args.nd1_sessions else 'ND1 IDs are pseudonymous and cannot be mapped to source session here: no certified ND1 session-disjoint evaluation until ND1 mapping verified.'),
              'eligible_sessions':len(by_session),'source_data_path':str(Path(args.data).resolve()),
@@ -227,7 +242,7 @@ def evaluate(args):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
-    q=sub.add_parser('sample');q.add_argument('--data',required=True);q.add_argument('--nd1',required=True);q.add_argument('--nd1-sessions',help='Optional private ND1 source session mapping with session_key column');q.add_argument('--outdir',default='annotation_work/nd2');q.add_argument('--seed',type=int,default=SEED)
+    q=sub.add_parser('sample');q.add_argument('--data',required=True);q.add_argument('--nd1',required=True);q.add_argument('--nd1-sessions',help='Optional private ND1 source session mapping with session_key column');q.add_argument('--provenance-attestation',help='Independent 40-case ND1 mapping review metadata; required before claiming confirmatory holdout');q.add_argument('--outdir',default='annotation_work/nd2');q.add_argument('--seed',type=int,default=SEED)
     q=sub.add_parser('evaluate');q.add_argument('--astra',required=True);q.add_argument('--claude',required=True);q.add_argument('--source',required=True);q.add_argument('--manifest',required=True);q.add_argument('--outdir',default='annotation_work/nd2')
     args=p.parse_args();(make if args.command=='sample' else evaluate)(args)
 if __name__=='__main__':main()
