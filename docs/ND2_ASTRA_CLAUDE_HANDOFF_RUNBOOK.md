@@ -19,7 +19,7 @@ python experiments/nd2_reconstruct_nd1.py --data data/studentbench \
   --nd1 annotation_work/ND1_Astra_A_40.csv \
   --out annotation_work/nd2/ND1_source_match_audit_private.csv
 ```
-4. All 40 ND1 records must be linked to trustworthy source sessions and independently checked. If ambiguous, manually resolve and document. Make private `ND1_sessions_private.csv` with `episode_id,session_key`, each key a 20-char SHA-256 prefix using the repo's exact algorithm. Keep reviewer/date/file-hashes attestation. **Do not represent automated unique text matches alone as conclusive provenance.**
+4. All 40 ND1 records must be linked to trustworthy source sessions and independently checked. If ambiguous, manually resolve and document. Make private `ND1_sessions_private.csv` with `episode_id,session_key`, each key a 20-char SHA-256 prefix using the repo's exact algorithm. Keep reviewer/date/file-hashes attestation with `mapping_decision: "approved"` and `all_40_verified: true` only after actual source review. **Do not represent automated unique text matches alone as conclusive provenance.**
 5. Run the standalone `validate_nd2_annotation.py source-gate` script from the handoff package. Stop on any failure.
 
 ## Phase 1: Create the actual private 280 inputs
@@ -28,6 +28,7 @@ python experiments/nd2_reconstruct_nd1.py --data data/studentbench \
 python experiments/nd2_pipeline.py sample \
  --data data/studentbench --nd1 annotation_work/ND1_Astra_A_40.csv \
  --nd1-sessions annotation_work/nd2/ND1_sessions_private.csv \
+ --provenance-attestation annotation_work/nd2/ND1_provenance_review.json \
  --outdir annotation_work/nd2 --seed 27102026
 ```
 Check 280 unique session keys, 200 random / 80 challenge, no overlap with ND1 mapping, and frozen source/checksums. Previous 200+80 Github Actions data was just **feasibility preflight**, no source rows persisted. This command is the real private export.
