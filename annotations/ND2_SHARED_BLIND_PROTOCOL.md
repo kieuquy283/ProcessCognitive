@@ -8,7 +8,7 @@ Unit of decision: current student turn, using only prior student excerpt and AI 
 
 Allowed categorical values:
 - `primary_act`: AK, AN, CQ, HR, OT, RE, VE.
-- `feedback_uptake`: AC, AP, NO, NR, UN.
+- `feedback_uptake`: AC, AP, RV, NO, NR, UN.
 - `confidence`: high, medium, low. Confidence is ordinal and not calibrated.
 
 Follow exactly the frozen codebook semantics and precedence rules; don't implement shallow keyword matching or infer private psychological states. Each output has exactly one act, one uptake code, a brief English evidence-based rationale, and confidence. If the input context is technically missing/truncated, request corrected input rather than pretending an `UN` annotation means unread data.
