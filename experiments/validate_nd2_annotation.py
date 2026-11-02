@@ -6,7 +6,7 @@ from pathlib import Path
 REVISION='304c8d63c726e72b60510bba3a44454fc0726721'
 INPUT=['episode_id','previous_student_excerpt','tutor_context','student_turn']
 COLS=INPUT+['primary_act','feedback_uptake','annotation_rationale','confidence']
-ACT={'AK','AN','CQ','HR','OT','RE','VE'};UPTAKE={'AC','AP','NO','NR','UN'};CONF={'high','medium','low'}
+ACT={'AK','AN','CQ','HR','OT','RE','VE'};UPTAKE={'AC','AP','RV','NO','NR','UN'};CONF={'high','medium','low'}
 def sha(path):
     h=hashlib.sha256()
     with open(path,'rb') as f:
