@@ -1,0 +1,25 @@
+name: ND2 blind annotation handoff tests
+on:
+  push:
+    branches:
+      - nd2/implementation-preparation-2026-10-27
+    paths:
+      - experiments/validate_nd2_annotation.py
+      - experiments/test_nd2_annotation_handoff.py
+      - .github/workflows/nd2-handoff-tests.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-handoff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run synthetic handoff tests (no participant-level data)
+        run: python experiments/test_nd2_annotation_handoff.py
