@@ -11,7 +11,7 @@ Read only:
 
 **Forbidden:** Access to Claude/Gemini labels, ND1 Astra labels, prior model results or reports, posttest/score fields or subsequent chat turns. Do not use another LLM, a hardcoded labeler or keyword rules to do semantic labeling. Keep your own agent isolated from Claude.
 
-For each row: label `primary_act` with exactly one of AK/AN/CQ/HR/OT/RE/VE; `feedback_uptake` with exactly one of AC/AP/NO/NR/UN; write a concise evidence-grounded `annotation_rationale`; set `confidence` high/medium/low. Use definitions **only from the frozen codebook**, not guessed acronym meanings. Preserve `episode_id`, `previous_student_excerpt`, `tutor_context`, `student_turn` byte-for-byte at parsed CSV field level and preserve all 280 row IDs/order.
+For each row: label `primary_act` with exactly one of AK/AN/CQ/HR/OT/RE/VE; `feedback_uptake` with exactly one of AC/AP/RV/NO/NR/UN; write a concise evidence-grounded `annotation_rationale`; set `confidence` high/medium/low. Use definitions **only from the frozen codebook**, not guessed acronym meanings. Preserve `episode_id`, `previous_student_excerpt`, `tutor_context`, `student_turn` byte-for-byte at parsed CSV field level and preserve all 280 row IDs/order.
 
 Deliver: `annotation_work/nd2/astra/ND2_Astra_A_280.csv`, valid UTF-8 CSV with exactly eight original columns. Save `annotation_work/nd2/astra/model_run.json` recording `annotator: Astra`, actual verified model ID, interface/API, date, codebook/source/prompt checksums, source revision, parameters and context limits. Missing/unreadable context is a blocker, not a valid student behavior code.
 
