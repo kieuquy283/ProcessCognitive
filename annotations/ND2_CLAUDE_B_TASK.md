@@ -9,7 +9,7 @@ Read only:
 - `annotation_work/nd2/ND1_CODEBOOK_FROZEN.md`.
 - `annotations/ND2_SHARED_BLIND_PROTOCOL.md`.
 
-Never inspect Astra output, old ND1 outputs, Gemini labels, agreement statistics or downstream posttest outcomes. Never use an external model to choose categories. For each of 280 student turns, use source `student_turn` and only its pre-turn context, frozen codebook and precedence. Write exactly one `primary_act` of AK/AN/CQ/HR/OT/RE/VE and exactly one `feedback_uptake` of AC/AP/NO/NR/UN, a short English evidence-based `annotation_rationale`, and high/medium/low confidence.
+Never inspect Astra output, old ND1 outputs, Gemini labels, agreement statistics or downstream posttest outcomes. Never use an external model to choose categories. For each of 280 student turns, use source `student_turn` and only its pre-turn context, frozen codebook and precedence. Write exactly one `primary_act` of AK/AN/CQ/HR/OT/RE/VE and exactly one `feedback_uptake` of AC/AP/RV/NO/NR/UN, a short English evidence-based `annotation_rationale`, and high/medium/low confidence.
 
 **Immutable** input columns: `episode_id,previous_student_excerpt,tutor_context,student_turn`. Do not reorder, edit or drop any row; quote CSV correctly. Stop and flag incomplete/transmission-truncated records; never use `UN` to hide unread data.
 
