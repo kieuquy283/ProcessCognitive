@@ -17,7 +17,7 @@ from pathlib import Path
 import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score, cohen_kappa_score, precision_recall_fscore_support, confusion_matrix
 
-ACT=['AK','AN','CQ','HR','OT','RE','VE']; UPT=['AC','AP','NO','NR','UN']; CONF=['high','medium','low']
+ACT=['AK','AN','CQ','HR','OT','RE','VE']; UPT=['AC','AP','RV','NO','NR','UN']; CONF=['high','medium','low']
 INPUT=['episode_id','previous_student_excerpt','tutor_context','student_turn']
 COLUMNS=INPUT+['primary_act','feedback_uptake','annotation_rationale','confidence']
 SEED=27102026
