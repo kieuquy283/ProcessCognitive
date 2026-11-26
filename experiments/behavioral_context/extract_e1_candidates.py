@@ -71,11 +71,28 @@ def extract(root,out,history_turns=6,min_sessions=80):
                 counters["missing_posttest_start"]+=1
                 continue
             stop=float(stop)
-            if any(e.get("timestamp_elapsed_seconds")
-                   and float(e["timestamp_elapsed_seconds"])>=stop for e in events):
+            # A posttest-timed *suffix* appearing strictly after the last
+            # student utterance cannot enter any pre-existing student context.
+            # Do not assume timestamps are monotonic: censor by the earliest
+            # boundary-crossing trajectory position, not by timestamp sort.
+            first_cross=next((int(e["trajectory_position"]) for e in events
+                if e.get("timestamp_elapsed_seconds","")!=""
+                and float(e["timestamp_elapsed_seconds"])>=stop),None)
+            last_student_pos=max((int(e["trajectory_position"]) for e in student),default=0)
+            if first_cross is not None and first_cross <= last_student_pos:
                 sessions.writerow({"session_id":sid,"section":section,"audit_pass":False})
                 counters["posttest_leakage_failure"]+=1
+                counters["posttest_boundary_ambiguous_sessions"]+=1
                 continue
+            if first_cross is not None:
+                # Retain only the strictly pre-crossing event prefix.
+                # Source student/AI event counts were validated on the full
+                # original trajectory above; the suffix is intentionally
+                # excluded from labeling input and future context.
+                counters["safe_posttest_suffix_sessions"]+=1
+                counters["suffix_events_discarded"]+=len(events)-first_cross+1
+                counters["student_turns_recovered_from_suffix_sessions"]+=len(student)
+                events=events[:first_cross-1]
             sessions.writerow({"session_id":sid,"section":section,"audit_pass":True})
             counters["sessions_pass"]+=1
             history=deque(maxlen=history_turns)

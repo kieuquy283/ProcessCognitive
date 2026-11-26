@@ -62,3 +62,36 @@ def test_refuse_short_source_and_posttest_leak(tmp_path):
     x=extract(root,tmp_path/"blocked",min_sessions=1)
     assert x["source_sessions"]["posttest_leakage_failure"]==1
     assert x["source_sessions"].get("student_turns_written",0)==0
+
+
+def test_safe_posttest_suffix_can_be_trimmed_without_future_context(tmp_path):
+    root=make_fixture(tmp_path)
+    profile_path=next(root.glob("**/student.json"))
+    profile=json.loads(profile_path.read_text())
+    profile["ai_tutor_messages_sent_to_student"]=3
+    profile_path.write_text(json.dumps(profile))
+    trajectory=next(root.glob("**/student_ai_tutor_interaction_trajectory.csv"))
+    with trajectory.open("a",newline="") as f:
+        wr=csv.writer(f)
+        wr.writerow([7,52,"ai_tutor_message","FICTIONAL posttest-timed suffix","p1","c1"])
+    result=extract(root,tmp_path/"safe",min_sessions=1)
+    stats=result["source_sessions"]
+    assert stats["safe_posttest_suffix_sessions"]==1
+    assert stats["student_turns_recovered_from_suffix_sessions"]==3
+    assert stats["suffix_events_discarded"]==1
+    df=pd.read_csv(tmp_path/"safe"/"turns_E1_PRIVATE_UNLABELED.csv",keep_default_na=False)
+    assert len(df)==3
+    assert all("posttest-timed suffix" not in s for s in df.prior_dialogue_json)
+    assert all("posttest-timed suffix" not in s for s in df.last_ai_response)
+
+
+def test_boundary_before_last_student_stays_blocked_even_if_later_timestamp_recrosses(tmp_path):
+    root=make_fixture(tmp_path)
+    path=next(root.glob("**/student_ai_tutor_interaction_trajectory.csv"))
+    df=pd.read_csv(path)
+    df.loc[4,"timestamp_elapsed_seconds"]=52
+    df.to_csv(path,index=False)
+    result=extract(root,tmp_path/"unsafe",min_sessions=1)
+    stats=result["source_sessions"]
+    assert stats["posttest_boundary_ambiguous_sessions"]==1
+    assert stats.get("student_turns_written",0)==0

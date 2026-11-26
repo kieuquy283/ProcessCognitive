@@ -31,3 +31,10 @@ Raw texts, participant-level records and annotator files must remain in ignored 
 ## E1 revision (2026-11-26): session-cluster dependence
 
 The original 280-turn pilot quota was attainable on a 24-session convenience slice, but that was not sufficient independence for reliable confidence intervals. Revised sampler now requires at least **40 source sessions in each GRE section**, caps selected turns at **five per session**, and checks representation of **20 development and 8 held-out sessions per section**. Development/holdout designation is stored in `E1_split_manifest_PRIVATE.csv` and not shown to annotators. Human independent annotations and a pinned full dataset remain required.
+
+
+## E1 boundary audit and censoring refinement (26 November 2026)
+
+The real full-cohort diagnostic [GitHub run #45778369614](https://github.com/kieuquy283/ProcessCognitive/actions/runs/45778369614) found 185 sessions excluded by the original *any-event-crosses-posttest* filter. These contain 396 beyond-boundary events: **0 student messages**, 48 AI replies and 348 system events; in 182/185 sessions, the first crossing occurs strictly **after the last student message**. The original condition therefore excluded usable pre-posttest student messages without being required to prevent downstream content leakage into earlier turns.
+
+Revised causal rule: find earliest original `trajectory_position` with a timestamp at/after test start; **retain and label only an event prefix if its boundary-crossing position is greater than the last student-message position**. Any boundary crossing before the last student message remains quarantined, including cases of timestamp re-crossing. Never sort by timestamps, never allow the beyond-boundary suffix into prior dialogue or task context. This is a conservative input-validity criterion and does not assert verified timing of every source event. The E1 pilot must be re-generated and its sample hash **will change**. The previous 280-turn hash remains an obsolete sampling version; do not merge A/B labels from different sample versions.
