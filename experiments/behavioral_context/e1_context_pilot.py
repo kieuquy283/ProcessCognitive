@@ -144,7 +144,7 @@ def prepare_e1(sessions_path, turns_path, out_dir, seed=20261126,
         out / "E1_split_manifest_PRIVATE.csv",index=False)
     columns = [
         "pilot_id", "turn_key", "session_id", "trajectory_position",
-        "section", "current_utterance", "last_ai_response",
+        "section", "current_utterance", "last_ai_response", "task_context_text",
         "prior_dialogue_json", "concept_id", "practice_problem_id",
         "label", "rationale"
     ]
