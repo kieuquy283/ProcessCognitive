@@ -1,0 +1,33 @@
+name: StudentBench E1 timestamp boundary diagnostic
+on:
+  pull_request:
+    paths:
+      - 'research_diagnostics/studentbench/**'
+      - '.github/workflows/studentbench-e1-boundary.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  aggregate-diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install huggingface_hub pytest
+      - run: python -m pytest -q research_diagnostics/studentbench/test_diagnose_e1_posttest_boundary.py
+      - name: Download pinned selective Quant/Verbal source
+        run: python experiments/behavioral_context/download_e1_subset.py --out ./data --max-workers 12
+      - name: Aggregate timestamp boundary diagnosis
+        run: |
+          python research_diagnostics/studentbench/diagnose_e1_posttest_boundary.py --data ./data --out ./results/E1_boundary_diagnostic.json --expect 2139
+      - name: Upload aggregate report (no participant data)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: E1-boundary-aggregate-only
+          path: results/E1_boundary_diagnostic.json
+          if-no-files-found: ignore
+          retention-days: 7

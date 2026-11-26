@@ -1,0 +1,13 @@
+{
+  "version": "CANDIDATE_0.1_NOT_APPROVED",
+  "approved": false,
+  "labels": [
+    "ANSWER_REQUEST",
+    "EXPLANATION_REQUEST",
+    "REASONING_PRESENTATION",
+    "VERIFICATION",
+    "REVISION",
+    "INTERACTION_MANAGEMENT"
+  ],
+  "notice": "Candidate categories only. UNCLEAR/OUT_OF_SCOPE are uncertainty dispositions. No human validation."
+}

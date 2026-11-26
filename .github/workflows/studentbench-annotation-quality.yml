@@ -1,0 +1,19 @@
+name: StudentBench E1 annotation agreement tool tests
+on:
+  pull_request:
+    paths:
+      - 'research_tooling/**'
+      - '.github/workflows/studentbench-annotation-quality.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  synthetic-only:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pandas scikit-learn pytest
+      - run: python -m pytest -q research_tooling/test_studentbench_annotation_agreement.py

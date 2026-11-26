@@ -1,0 +1,80 @@
+name: StudentBench controlled research pilots
+on:
+  pull_request:
+    paths:
+      - 'experiments/behavioral_context/**'
+      - '.github/workflows/studentbench-e8r.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: studentbench-research-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  e8r-development:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r experiments/behavioral_context/requirements-pilot.txt
+      - name: Synthetic unit tests
+        run: python -m pytest -q experiments/behavioral_context/tests
+      - name: Download pinned GRE Quant subset
+        run: python experiments/behavioral_context/download_e8r_subset.py --out ./data --max-workers 12
+      - name: E8R development only
+        run: |
+          mkdir -p results
+          python experiments/behavioral_context/controlled_event_ablation.py --data ./data --per-tutor 62 --output ./results/E8R_DEVELOPMENT_EXPLORATORY.json
+      - name: Upload aggregate E8R
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: E8R-development-aggregate
+          path: results/E8R_DEVELOPMENT_EXPLORATORY.json
+          if-no-files-found: ignore
+          retention-days: 7
+  e0-e1-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r experiments/behavioral_context/requirements-pilot.txt
+      - name: Download pinned Quant and Verbal AI inputs
+        run: python experiments/behavioral_context/download_e1_subset.py --out ./data --max-workers 12
+      - name: Full AI-cohort score and event integrity audit
+        run: |
+          mkdir -p results
+          python experiments/behavioral_context/e0_aggregate_audit.py --data ./data --expect 2139 --out ./results/E0_full_aggregate.json
+          python -c 'import json; x=json.load(open("results/E0_full_aggregate.json")); assert x["status"] == "PASS_AUDIT_ONLY", "E0 BLOCKED"'
+      - name: Privately prepare unlabeled E1 contextual pilot
+        run: |
+          mkdir -p annotation_work/e1
+          python experiments/behavioral_context/extract_e1_candidates.py --data ./data --out ./annotation_work/e1 --min-sessions 80
+          python experiments/behavioral_context/e1_context_pilot.py --sessions ./annotation_work/e1/sessions_E0_INTERNAL.csv --turns ./annotation_work/e1/turns_E1_PRIVATE_UNLABELED.csv --out ./annotation_work/e1/annotation
+          python experiments/behavioral_context/summarize_e1_input.py --turns ./annotation_work/e1/turns_E1_PRIVATE_UNLABELED.csv --out ./results/E1_context_availability_aggregate.json
+          cp ./annotation_work/e1/E1_extraction_aggregate.json ./results/E1_extraction_aggregate.json
+          cp ./annotation_work/e1/annotation/E1_sampling_summary.json ./results/E1_sampling_aggregate.json
+      - name: Upload only aggregate reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: E0-E1-aggregate-only
+          path: |
+            results/E0_full_aggregate.json
+            results/E1_context_availability_aggregate.json
+            results/E1_extraction_aggregate.json
+            results/E1_sampling_aggregate.json
+          if-no-files-found: ignore
+          retention-days: 7
