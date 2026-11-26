@@ -29,7 +29,7 @@ The corrected E8R design has four arms on the same data and same outcome:
 - **M2:** M1 plus full-session adjacent transition features;
 - **M2-shuffled:** M1 plus transitions extracted from a session-wise count-preserving permutation.
 
-Use identical outer CV folds, tune Ridge only on training folds, estimate paired MAE differences at session level. Comparing M2 with both M1 and M2-shuffled tests a narrower temporal prediction hypothesis. **E8R has been coded and synthetically unit-tested locally, but NOT run on real full data**; the code bundle is delivered separately in this session.
+Use identical outer CV folds, tune Ridge only on training folds, estimate paired MAE differences at session level. Comparing M2 with both M1 and M2-shuffled tests a narrower temporal prediction hypothesis. **E8R has been implemented** in `experiments/behavioral_context/controlled_event_ablation.py` with synthetic unit tests in the adjacent `tests/` directory, but **has NOT run on the real full-cohort data**. The standalone snapshot verifier `verify_studentbench_snapshot.py` now supports a strict E0 provenance gate.
 
 ## E1 decision
 
