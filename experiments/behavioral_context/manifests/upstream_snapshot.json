@@ -1,0 +1,8 @@
+{
+  "dataset": "handshake-ai-research/studentbench",
+  "huggingface_revision": "304c8d63c726e72b60510bba3a44454fc0726721",
+  "official_source_commit": "53f16080bfd2b2780a4b7d24f99a7063f0600685",
+  "pin_recorded_from": "https://github.com/Handshake-AI-Research/studentbench/blob/main/verification/data_snapshot.json",
+  "micro_audit_remote_urls": "main",
+  "full_local_snapshot_verified": false
+}
