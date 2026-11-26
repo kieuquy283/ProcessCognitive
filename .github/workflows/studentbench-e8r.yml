@@ -1,0 +1,46 @@
+name: StudentBench E8R controlled development pilot
+on:
+  pull_request:
+    paths:
+      - 'experiments/behavioral_context/**'
+      - '.github/workflows/studentbench-e8r.yml'
+  push:
+    branches:
+      - 'research/studentbench-behavioral-e0-e1-20261126'
+    paths:
+      - 'experiments/behavioral_context/**'
+      - '.github/workflows/studentbench-e8r.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test-and-development-e8r:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install research dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r experiments/behavioral_context/requirements-pilot.txt
+      - name: Unit tests (synthetic data only)
+        run: python -m pytest -q experiments/behavioral_context/tests
+      - name: Download official pinned GRE Quant subset (not full hash verification)
+        run: python experiments/behavioral_context/download_e8r_subset.py --out ./data --max-workers 12
+      - name: E8R development four-fold nested ridge evaluation
+        run: |
+          mkdir -p ./results
+          python experiments/behavioral_context/controlled_event_ablation.py \
+            --data ./data --per-tutor 62 \
+            --output ./results/E8R_DEVELOPMENT_EXPLORATORY.json
+      - name: Upload aggregate-only diagnostic output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: E8R-development-aggregate
+          path: results/E8R_DEVELOPMENT_EXPLORATORY.json
+          if-no-files-found: ignore
+          retention-days: 7
