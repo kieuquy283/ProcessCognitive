@@ -24,7 +24,8 @@ REQUIRED = {
 
 
 def prepare_e1(sessions_path, turns_path, out_dir, seed=20261126,
-               n_total=280, n_holdout=80, min_sessions_per_section=10):
+               n_total=280, n_holdout=80, min_sessions_per_section=40,
+               max_turns_per_session=5):
     if n_total != 280 or n_holdout != 80:
         raise ValueError("Frozen E1 design requires 280 turns: 200 development + 80 locked holdout")
     sessions = pd.read_csv(sessions_path, keep_default_na=False)
@@ -61,6 +62,10 @@ def prepare_e1(sessions_path, turns_path, out_dir, seed=20261126,
         if any(int(x["trajectory_position"]) >= int(record.trajectory_position)
                for x in history):
             raise RuntimeError("E1 BLOCKED: future context leaked into annotation")
+        last_ai = next((x.get("content","") for x in reversed(history)
+                        if x.get("role") == "ai_tutor"), "")
+        if str(record.last_ai_response) != str(last_ai):
+            raise RuntimeError("E1 BLOCKED: last_ai_response inconsistent with prior history")
     if len(merged) < n_total:
         raise RuntimeError(
             f"E1 BLOCKED: only {len(merged)} eligible turns; require {n_total}")
@@ -86,6 +91,13 @@ def prepare_e1(sessions_path, turns_path, out_dir, seed=20261126,
                 raise RuntimeError(
                     f"E1 BLOCKED: {section}/{split} only {len(pool)} turns; "
                     f"need {wanted}")
+            # Limit correlated turns per session before length-stratified selection.
+            capped=[]
+            for sid, group in pool.groupby('session_id', sort=True):
+                n_take=min(max_turns_per_session,len(group))
+                indices=rng.choice(len(group),n_take,replace=False)
+                capped.append(group.iloc[indices])
+            pool=pd.concat(capped,ignore_index=True)
             short = pool[pool.short]
             long = pool[~pool.short]
             n_short = min(len(short), wanted // 2)
@@ -93,12 +105,15 @@ def prepare_e1(sessions_path, turns_path, out_dir, seed=20261126,
             if n_short + n_long < wanted:
                 n_short = min(len(short), wanted - n_long)
             if n_short + n_long < wanted:
-                raise RuntimeError("E1 BLOCKED: length-stratified quota impossible")
+                raise RuntimeError("E1 BLOCKED: session-cap/length-stratified quota impossible")
             chosen = pd.concat([
                 short.iloc[rng.choice(len(short), n_short, replace=False)],
                 long.iloc[rng.choice(len(long), n_long, replace=False)],
             ]).copy()
             chosen["split"] = split
+            min_selected=20 if split=="development" else 8
+            if chosen.session_id.nunique() < min_selected:
+                raise RuntimeError("E1 BLOCKED: too few independent sessions after sampling")
             items.append(chosen)
             strata.append({
                 "section": section, "split": split,
@@ -125,16 +140,19 @@ def prepare_e1(sessions_path, turns_path, out_dir, seed=20261126,
     selected["rationale"] = ""
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
+    selected[["pilot_id","turn_key","session_id","split"]].to_csv(
+        out / "E1_split_manifest_PRIVATE.csv",index=False)
     columns = [
         "pilot_id", "turn_key", "session_id", "trajectory_position",
-        "section", "split", "current_utterance", "last_ai_response",
+        "section", "current_utterance", "last_ai_response",
         "prior_dialogue_json", "concept_id", "practice_problem_id",
         "label", "rationale"
     ]
     columns = [c for c in columns if c in selected]
     for who in ("A", "B"):
-        selected[columns].to_csv(
-            out / f"e1_annotator_{who}_UNLABELED.csv", index=False)
+        sheet=selected[columns].copy()
+        sheet["annotator_id"]=who
+        sheet.to_csv(out / f"e1_annotator_{who}_UNLABELED.csv", index=False)
     digest = hashlib.sha256(
         "\n".join(sorted(selected.turn_key)).encode()
     ).hexdigest()
@@ -147,7 +165,7 @@ def prepare_e1(sessions_path, turns_path, out_dir, seed=20261126,
         "n_locked_holdout": int(
             (selected.split == "locked_holdout").sum()),
         "selected_keys_sha256": digest,
-        "seed": seed, "strata": strata,
+        "seed": seed, "max_turns_per_session":max_turns_per_session, "strata": strata,
         "warning": "Length-enriched pilot; not a population-prevalence "
                    "estimator. Human annotations are not supplied.",
     }

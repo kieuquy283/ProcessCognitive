@@ -28,3 +28,7 @@ pytest -q experiments/behavioral_context/tests
 **Important:** The E1 sampler requires turn-level E0 inputs. The aggregate-only E0 script intentionally does not emit participant rows; use the separate, consent-compliant local E0 pipeline supplied with the research pilot bundle to generate such inputs.
 
 Official source: https://github.com/Handshake-AI-Research/studentbench. The pinned revision is documented, but the 8 remote micro-audit sessions were fetched from `main` and have not been hash-checked against that revision.
+
+## 2026-11-26 methodological continuation
+
+E1 has an increased session independence gate (40 input sessions per GRE section; <=5 sampled turns per session). The 24-session convenience E0 extension is insufficient for the *revised* gold annotation pilot despite having >280 utterances. See `reports/behavioral_context_E8R_E1_2026-11-26.md` for the E8 non-nested-model critique and controlled baseline requirements.

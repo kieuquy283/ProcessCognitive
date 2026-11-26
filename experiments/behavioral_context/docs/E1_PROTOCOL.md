@@ -26,3 +26,8 @@ Two human annotators independently fill local A/B sheets and preserve disagreeme
 **Critical gate:** 280 isolated annotation units do not provide complete behavioral sequences. E4 requires complete contiguous session labeling; E5 requires separate held-out score prediction evaluation. Current eight-session convenience audit has 228 student turns: E1 has not run on a 280-row real sample.
 
 Raw texts, participant-level records and annotator files must remain in ignored `annotation_work/`, never on public GitHub. Sources: StudentBench https://github.com/Handshake-AI-Research/studentbench ; StudyChat https://arxiv.org/abs/2503.07928 ; TurnStyle https://doi.org/10.1145/3772318.3790459 .
+
+
+## E1 revision (2026-11-26): session-cluster dependence
+
+The original 280-turn pilot quota was attainable on a 24-session convenience slice, but that was not sufficient independence for reliable confidence intervals. Revised sampler now requires at least **40 source sessions in each GRE section**, caps selected turns at **five per session**, and checks representation of **20 development and 8 held-out sessions per section**. Development/holdout designation is stored in `E1_split_manifest_PRIVATE.csv` and not shown to annotators. Human independent annotations and a pinned full dataset remain required.

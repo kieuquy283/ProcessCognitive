@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from e1_context_pilot import prepare_e1
 
 
-def fake_inputs(tmp_path, n_sessions=40, turns_per_session=24):
+def fake_inputs(tmp_path, n_sessions=100, turns_per_session=24):
     sessions, turns = [], []
     for i in range(n_sessions):
         section = "gre_quant" if i % 2 == 0 else "gre_verbal"
@@ -23,7 +23,7 @@ def fake_inputs(tmp_path, n_sessions=40, turns_per_session=24):
                 "trajectory_position": j*3+2,
                 "current_utterance": "why?" if j % 2 == 0 else
                                      "please check my carefully written detailed solution to this question",
-                "last_ai_response": "FICTIONAL previous tutor reply",
+                "last_ai_response": "" if j == 0 else "FICTIONAL",
                 "prior_dialogue_json": json.dumps([] if j == 0 else [
                     {"role": "ai_tutor", "content": "FICTIONAL",
                      "trajectory_position": j*3+1}]),
@@ -48,10 +48,15 @@ def test_deterministic_section_split_and_blinded_labels(tmp_path):
                     keep_default_na=False)
     assert len(x) == 280 and x.turn_key.is_unique and set(x.label) == {""}
     assert "pre_score" not in x.columns and "post_score" not in x.columns
-    dev = set(x.loc[x.split == "development", "session_id"])
-    hold = set(x.loc[x.split == "locked_holdout", "session_id"])
+    split = pd.read_csv(tmp_path / "a" / "E1_split_manifest_PRIVATE.csv")
+    assert "split" not in x.columns
+    dev = set(split.loc[split.split == "development", "session_id"])
+    hold = set(split.loc[split.split == "locked_holdout", "session_id"])
     assert not dev & hold
-    assert x.groupby(["section", "split"]).size().to_dict() == {
+    assert x.groupby("session_id").size().max() <= 5
+    assert len(dev)>=40 and len(hold)>=16
+    assert x.annotator_id.eq("A").all()
+    assert x[["pilot_id","section"]].merge(split[["pilot_id","split"]],on="pilot_id").groupby(["section", "split"]).size().to_dict() == {
         ("gre_quant", "development"): 100,
         ("gre_quant", "locked_holdout"): 40,
         ("gre_verbal", "development"): 100,
@@ -79,3 +84,12 @@ def test_refuse_outcome_leakage_and_future_history(tmp_path):
     df.to_csv(t, index=False)
     with pytest.raises(RuntimeError, match="future context"):
         prepare_e1(s, t, tmp_path / "out")
+
+
+def test_inconsistent_prior_ai_response_is_rejected(tmp_path):
+    s,t=fake_inputs(tmp_path)
+    df=pd.read_csv(t,keep_default_na=False)
+    df.loc[1,"last_ai_response"]="NOT IN PRIOR HISTORY"
+    df.to_csv(t,index=False)
+    with pytest.raises(RuntimeError,match="last_ai_response inconsistent"):
+        prepare_e1(s,t,tmp_path/"invalid")
